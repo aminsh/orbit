@@ -5,8 +5,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { UserModule } from './user/user.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { VoidResolver } from 'graphql-scalars'
+import { VoidResolver, GraphQLJSON } from 'graphql-scalars'
 import { SharedModule } from './shared/shared.module'
+import { DataModule } from './data/data.module';
+import { EventEmitterModule } from '@nestjs/event-emitter'
 
 @Module({
   imports: [
@@ -20,11 +22,14 @@ import { SharedModule } from './shared/shared.module'
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       resolvers: {
-        Void: VoidResolver
+        Void: VoidResolver,
+        JSON: GraphQLJSON,
       }
     }),
+    EventEmitterModule.forRoot(),
     SharedModule,
     UserModule,
+    DataModule,
   ],
   controllers: [],
   providers: [],

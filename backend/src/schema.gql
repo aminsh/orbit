@@ -18,14 +18,80 @@ type TokenResponse {
   token_type: String!
 }
 
+type DataModelFieldView {
+  name: String!
+  label: String!
+  type: DataModelFieldType!
+  required: Boolean!
+}
+
+enum DataModelFieldType {
+  Text
+  Integer
+  Float
+  Boolean
+}
+
+type DataStorageView {
+  id: String!
+  createdBy: UserView!
+  type: StorageType!
+  status: StorageStatus!
+}
+
+enum StorageType {
+  Postgres
+}
+
+enum StorageStatus {
+  Pending
+  Ready
+}
+
+type DataStoragePageableResponse {
+  count: Int!
+  data: [DataStorageView!]!
+}
+
+type DataModelView {
+  id: String!
+  createdBy: UserView!
+  name: String!
+  fields: [DataModelFieldView!]!
+  dataStorage: DataStorageView!
+}
+
+type DataModelPageabeResponse {
+  count: Int!
+  data: [DataModelView!]!
+}
+
+type InsertResponse {
+  id: Int!
+}
+
 type Query {
   userAuthenticated: UserView!
+  dataStoragesFind(request: PageableRequest!): DataStoragePageableResponse!
+  dataModelsFind(request: PageableRequest!): DataModelPageabeResponse!
+}
+
+input PageableRequest {
+  take: Int!
+  skip: Int!
 }
 
 type Mutation {
   userRegister(dto: RegisterDTO!): IdentityResponse!
   userLogin(dto: LoginDTO!): TokenResponse!
-  userUpdate(userId: String!, updateUser: UpdateUserDTO!): Void
+  userUpdate(id: String!, dto: UpdateUserDTO!): Void
+  dataStorageCreate(dto: DataStorageDto!): IdentityResponse
+  dataStorageInitilize(id: String!): Void
+  dataStorageSynchronize(id: String!): Void
+  dataModelCreate(dto: DataModelDto!): IdentityResponse!
+  dataModelUpdate(id: String!, dto: DataModelDto!): Void
+  dataModelRemove(id: String!): Void
+  dataModelInsert(id: String!, data: JSON!): InsertResponse
 }
 
 input RegisterDTO {
@@ -45,3 +111,25 @@ scalar Void
 input UpdateUserDTO {
   name: String!
 }
+
+input DataStorageDto {
+  type: StorageType!
+}
+
+input DataModelDto {
+  name: String!
+  fields: [DataModelFieldDto!]!
+  dataStorageId: String!
+}
+
+input DataModelFieldDto {
+  name: String!
+  label: String
+  type: DataModelFieldType!
+  required: Boolean
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")

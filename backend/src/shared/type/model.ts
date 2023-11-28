@@ -1,4 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
+import { IsNumber } from 'class-validator';
 import { FilterQuery, ProjectionType } from 'mongoose'
 
 export interface Identity {
@@ -7,8 +8,27 @@ export interface Identity {
 
 @ObjectType()
 export class IdentityResponse {
-  @Field()
+  @Field(() => String)
   id: string
+}
+
+@ObjectType()
+export abstract class PageableResponseBase<TView> {
+  @Field(() => Int)
+  count: number
+
+  abstract data: TView[]
+}
+
+@InputType()
+export class PageableRequest {
+  @Field(() => Int)
+  @IsNumber()
+  take: number
+
+  @Field(() => Int)
+  @IsNumber()
+  skip: number
 }
 
 export class Entity {
