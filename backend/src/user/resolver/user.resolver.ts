@@ -21,7 +21,7 @@ export class UserResolver {
   @Mutation(() => IdentityResponse, { name: 'userRegister' })
   async register(@Args('dto') dto: RegisterDTO): Promise<IdentityResponse> {
     const result = await this.userService.create(dto)
-    return { id: result['_id'] }
+    return { id: result._id }
   }
 
   @Mutation(() => TokenResponse, { name: 'userLogin' })
@@ -31,8 +31,8 @@ export class UserResolver {
 
   @Mutation(() => VoidResolver, { name: 'userUpdate', nullable: true })
   update(
-    @Args('userId') id: string,
-    @Args('updateUser') dto: UpdateUserDTO): Promise<void> {
+    @Args('id') id: string,
+    @Args('dto') dto: UpdateUserDTO): Promise<void> {
     return this.userService.update(id, dto)
   }
 }

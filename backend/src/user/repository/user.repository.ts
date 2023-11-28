@@ -5,7 +5,9 @@ import { FilterQuery, Model, ProjectionType } from 'mongoose'
 
 @Injectable()
 export class UserRepository {
-  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>
+  ) { }
 
   findOne(filter: FilterQuery<User>, projection?: ProjectionType<User>): Promise<User> {
     return this.userModel.findOne(filter, projection)
