@@ -29,7 +29,7 @@ export class DataModelView {
 
 
 @ObjectType()
-export class DataModelPageabeResponse extends PageableResponseBase<DataModelView> {
+export class DataModelPageableResponse extends PageableResponseBase<DataModelView> {
   @Field(() => [DataModelView])
   data: DataModelView[]
 }

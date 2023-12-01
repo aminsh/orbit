@@ -2,11 +2,12 @@ import { Identity } from '../../shared/type'
 import { DataStorageDto } from '../dto/data-storage.dto'
 import { DataStorageRepository } from '../repository/data-storage-repository'
 import { DataStorage } from '../schema/data-storage'
-import { Injectable, NotFoundException, Scope } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common'
 import { RequestContext } from '../../shared/service/request-context'
 import { User } from '../../user/shema/user'
 import { PostgresService } from './postgres.service'
 import { StorageStatus } from '../schema/enums'
+import { DATABASE_CONFIGURATION_FACTORY, DatabaseConfigurationFactory } from './database-configurations.service'
 
 @Injectable({ scope: Scope.REQUEST })
 export class DataStorageService {
@@ -14,6 +15,7 @@ export class DataStorageService {
     private dataStorageRepository: DataStorageRepository,
     private requestContext: RequestContext,
     private postgresService: PostgresService,
+    @Inject(DATABASE_CONFIGURATION_FACTORY) private databaseConfigurationFactory: DatabaseConfigurationFactory,
   ) { }
 
   async create(dto: DataStorageDto): Promise<Identity> {
@@ -36,7 +38,8 @@ export class DataStorageService {
   async initialize(id: string): Promise<void> {
     const entity = await this.fetch(id)
 
-    await this.postgresService.createDatabase(entity)
+    const instance = this.databaseConfigurationFactory.instance(entity.type)
+    await instance.init(entity)
 
     entity.status = StorageStatus.Ready
 
@@ -45,6 +48,9 @@ export class DataStorageService {
 
   async synchronize(id: string): Promise<void> {
     const entity = await this.fetch(id)
+
+    const instance = this.databaseConfigurationFactory.instance(entity.type)
+    await instance.sync(entity)
 
     await this.postgresService.synchronize(entity)
   }

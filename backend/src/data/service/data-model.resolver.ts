@@ -1,6 +1,5 @@
-
-import { Args, Mutation, Resolver, Query } from '@nestjs/graphql'
-import { DataModelPageabeResponse, DataModelView } from '../dto/data-model-view'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { DataModelPageableResponse, DataModelView } from '../dto/data-model-view'
 import { InjectModel } from '@nestjs/mongoose'
 import { DataModel } from '../schema/data-model'
 import { FilterQuery, Model } from 'mongoose'
@@ -12,7 +11,7 @@ import { IdentityResponse, PageableRequest } from 'src/shared/type'
 import { DataModelDto } from '../dto/data-model-dto'
 import { GraphQLJSON, VoidResolver } from 'graphql-scalars'
 import { assembleDataModel } from '../dto/assemble-date-model'
-import { InsertResponse } from '../data.type'
+import { InsertResponse, QueryFindAndCountResponse } from '../data.type'
 
 @UseGuards(JwtGqlAuthenticationGuard)
 @Resolver(() => DataModelView)
@@ -46,17 +45,25 @@ export class DataModelResolver {
   }
 
   @Mutation(() => InsertResponse, { name: 'dataModelInsert', nullable: true })
-  async insert(
+  insert(
     @Args('id', { type: () => String }) id: string,
     @Args('data', { type: () => GraphQLJSON }) data: any,
   ): Promise<InsertResponse> {
     return this.dataModelSerivice.insert(id, data)
   }
 
-  @Query(() => DataModelPageabeResponse, { name: 'dataModelsFind' })
+  @Query(() => QueryFindAndCountResponse, { name: 'dataModelQueryFindAndCount' })
+  query(
+    @Args('id', { type: () => String }) id: string,
+    @Args('query', { type: () => GraphQLJSON }) query: any,
+  ): Promise<QueryFindAndCountResponse[]> {
+    return this.dataModelSerivice.queryFindAndCount(id, query)
+  }
+
+  @Query(() => DataModelPageableResponse, { name: 'dataModelsFind' })
   async find(
     @Args('request', { type: () => PageableRequest }) { take, skip }: PageableRequest,
-  ): Promise<DataModelPageabeResponse> {
+  ): Promise<DataModelPageableResponse> {
     const filter: FilterQuery<DataModel> = {
       createdBy: {
         _id: this.requestContext.authenticatedUser.id,
@@ -67,7 +74,7 @@ export class DataModelResolver {
       {
         limit: take,
         skip,
-        populate: ['createdBy', 'dataStorage']
+        populate: [ 'createdBy', 'dataStorage' ]
       })
 
     const count = await this.dataModel.count(filter)

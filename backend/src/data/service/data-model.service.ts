@@ -51,6 +51,11 @@ export class DataModelService {
     return this.postgresService.insert(entity, data)
   }
 
+  async queryFindAndCount(id:string, query: any): Promise<any> {
+    const entity = await this.fetch(id)
+    return this.postgresService.query(entity, query)
+  }
+
   private async fetch(id: string): Promise<DataModel> {
     const entity = await this.dataModelRepository.findOne({
       _id: id

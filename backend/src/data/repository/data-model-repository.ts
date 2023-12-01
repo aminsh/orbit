@@ -14,8 +14,8 @@ export class DataModelRepository implements Repository<DataModel> {
     return this.dataModel.find(filter, projection, options)
   }
 
-  findOne(filter: FilterQuery<DataModel>, projection?: ProjectionType<DataModel>): Promise<DataModel> {
-    return this.dataModel.findOne(filter, projection)
+  findOne(filter: FilterQuery<DataModel>, projection?: ProjectionType<DataModel>, options?: QueryOptions<DataModel>): Promise<DataModel> {
+    return this.dataModel.findOne(filter, projection, options)
   }
 
   create(entity: DataModel): Promise<DataModel> {
