@@ -9,9 +9,8 @@ import { RequestContext } from 'src/shared/service/request-context'
 import { DataModelService } from './data-model.service'
 import { IdentityResponse, PageableRequest } from 'src/shared/type'
 import { DataModelDto } from '../dto/data-model-dto'
-import { GraphQLJSON, VoidResolver } from 'graphql-scalars'
+import { VoidResolver } from 'graphql-scalars'
 import { assembleDataModel } from '../dto/assemble-date-model'
-import { InsertResponse, QueryFindAndCountResponse } from '../data.type'
 
 @UseGuards(JwtGqlAuthenticationGuard)
 @Resolver(() => DataModelView)
@@ -19,14 +18,14 @@ export class DataModelResolver {
   constructor(
     @InjectModel(DataModel.name) private dataModel: Model<DataModel>,
     private requestContext: RequestContext,
-    private dataModelSerivice: DataModelService,
+    private dataModelService: DataModelService,
   ) { }
 
   @Mutation(() => IdentityResponse, { name: 'dataModelCreate' })
   async create(
     @Args('dto', { type: () => DataModelDto }) dto: DataModelDto,
   ): Promise<IdentityResponse> {
-    return this.dataModelSerivice.create(dto)
+    return this.dataModelService.create(dto)
   }
 
   @Mutation(() => VoidResolver, { name: 'dataModelUpdate', nullable: true })
@@ -34,30 +33,14 @@ export class DataModelResolver {
     @Args('id', { type: () => String }) id: string,
     @Args('dto', { type: () => DataModelDto }) dto: DataModelDto,
   ): Promise<void> {
-    return this.dataModelSerivice.update(id, dto)
+    return this.dataModelService.update(id, dto)
   }
 
   @Mutation(() => VoidResolver, { name: 'dataModelRemove', nullable: true })
   async remove(
     @Args('id', { type: () => String }) id: string,
   ): Promise<void> {
-    return this.dataModelSerivice.remove(id)
-  }
-
-  @Mutation(() => InsertResponse, { name: 'dataModelInsert', nullable: true })
-  insert(
-    @Args('id', { type: () => String }) id: string,
-    @Args('data', { type: () => GraphQLJSON }) data: any,
-  ): Promise<InsertResponse> {
-    return this.dataModelSerivice.insert(id, data)
-  }
-
-  @Query(() => QueryFindAndCountResponse, { name: 'dataModelQueryFindAndCount' })
-  query(
-    @Args('id', { type: () => String }) id: string,
-    @Args('query', { type: () => GraphQLJSON }) query: any,
-  ): Promise<QueryFindAndCountResponse[]> {
-    return this.dataModelSerivice.queryFindAndCount(id, query)
+    return this.dataModelService.remove(id)
   }
 
   @Query(() => DataModelPageableResponse, { name: 'dataModelsFind' })

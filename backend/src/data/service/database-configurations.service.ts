@@ -1,5 +1,5 @@
 import { DataStorage } from '../schema/data-storage'
-import { StorageType } from '../schema/enums';
+import { StorageType } from '../schema/enums'
 
 export interface DatabaseConfigurationsService {
   init(dataStorage: DataStorage): Promise<void>

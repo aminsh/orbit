@@ -8,8 +8,6 @@ import { DATA_MESSAGE } from '../data.constant'
 import { DataModelField } from '../schema/data-model-field'
 import { DataStorageRepository } from '../repository/data-storage-repository'
 import { Identity } from 'src/shared/type'
-import { PostgresService } from './postgres.service'
-import { InsertResponse } from '../data.type'
 import { User } from 'src/user/shema/user'
 
 @Injectable({ scope: Scope.REQUEST })
@@ -18,7 +16,6 @@ export class DataModelService {
     private requestContext: RequestContext,
     private dataModelRepository: DataModelRepository,
     private dataStorageRepository: DataStorageRepository,
-    private postgresService: PostgresService,
   ) { }
 
   async create(dto: DataModelDto): Promise<Identity> {
@@ -44,16 +41,6 @@ export class DataModelService {
     const entity = await this.fetch(id)
 
     await this.dataModelRepository.remove(entity)
-  }
-
-  async insert(id: string, data: any): Promise<InsertResponse> {
-    const entity = await this.fetch(id)
-    return this.postgresService.insert(entity, data)
-  }
-
-  async queryFindAndCount(id:string, query: any): Promise<any> {
-    const entity = await this.fetch(id)
-    return this.postgresService.query(entity, query)
   }
 
   private async fetch(id: string): Promise<DataModel> {

@@ -1,6 +1,6 @@
 import { DataModel } from '../schema/data-model'
 import { InsertResponse, QueryFindAndCountResponse } from '../data.type'
-import { StorageType } from '../schema/enums';
+import { StorageType } from '../schema/enums'
 
 export interface DatabaseQueryService {
   insert(dataModel: DataModel, data: any): Promise<InsertResponse>

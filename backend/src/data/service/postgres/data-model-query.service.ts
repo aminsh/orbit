@@ -1,8 +1,8 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { DATABASE_QUERY_FACTORY, DatabaseQueryFactory, DatabaseQueryService } from '../database-query.service';
-import { DataModelRepository } from '../../repository/data-model-repository';
-import { InsertResponse, QueryFindAndCountResponse } from '../../data.type';
-import { DataModel } from '../../schema/data-model';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
+import { DATABASE_QUERY_FACTORY, DatabaseQueryFactory, DatabaseQueryService } from '../database-query.service'
+import { DataModelRepository } from '../../repository/data-model-repository'
+import { InsertResponse, QueryFindAndCountResponse } from '../../data.type'
+import { DataModel } from '../../schema/data-model'
 
 @Injectable()
 export class DataModelQueryService {

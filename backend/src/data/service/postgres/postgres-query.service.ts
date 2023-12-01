@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { DatabaseQueryService } from '../database-query.service';
-import { DataModel } from '../../schema/data-model';
-import { InsertResponse, QueryFindAndCountResponse } from '../../data.type';
-import { SequelizeService } from './sequelize.service';
-import { Op } from 'sequelize';
-import { isSimpleType } from '../../../shared/utils';
+import { Injectable } from '@nestjs/common'
+import { DatabaseQueryService } from '../database-query.service'
+import { DataModel } from '../../schema/data-model'
+import { InsertResponse, QueryFindAndCountResponse } from '../../data.type'
+import { SequelizeService } from './sequelize.service'
+import { Op } from 'sequelize'
+import { isSimpleType } from '../../../shared/utils'
 
 @Injectable()
 export class PostgresQueryService implements DatabaseQueryService {
