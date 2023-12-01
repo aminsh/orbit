@@ -5,7 +5,6 @@ import { DataStorage } from '../schema/data-storage'
 import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common'
 import { RequestContext } from '../../shared/service/request-context'
 import { User } from '../../user/shema/user'
-import { PostgresService } from './postgres.service'
 import { StorageStatus } from '../schema/enums'
 import { DATABASE_CONFIGURATION_FACTORY, DatabaseConfigurationFactory } from './database-configurations.service'
 
@@ -14,7 +13,6 @@ export class DataStorageService {
   constructor(
     private dataStorageRepository: DataStorageRepository,
     private requestContext: RequestContext,
-    private postgresService: PostgresService,
     @Inject(DATABASE_CONFIGURATION_FACTORY) private databaseConfigurationFactory: DatabaseConfigurationFactory,
   ) { }
 
@@ -51,8 +49,6 @@ export class DataStorageService {
 
     const instance = this.databaseConfigurationFactory.instance(entity.type)
     await instance.sync(entity)
-
-    await this.postgresService.synchronize(entity)
   }
 
   private async fetch(id: string): Promise<DataStorage> {

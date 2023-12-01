@@ -83,7 +83,6 @@ scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 type Query {
   userAuthenticated: UserView!
   dataStoragesFind(request: PageableRequest!): DataStoragePageableResponse!
-  dataModelQueryFindAndCount(id: String!, query: JSON!): QueryFindAndCountResponse!
   dataModelsFind(request: PageableRequest!): DataModelPageableResponse!
   dataModelQueryFind(id: String!, query: JSON): QueryFindAndCountResponse!
   dataModelQueryFindOne(id: String!, query: JSON!): JSON!
@@ -104,7 +103,6 @@ type Mutation {
   dataModelCreate(dto: DataModelDto!): IdentityResponse!
   dataModelUpdate(id: String!, dto: DataModelDto!): Void
   dataModelRemove(id: String!): Void
-  dataModelInsert(id: String!, data: JSON!): InsertResponse
   dataModelQueryInsert(id: String!, data: JSON!): InsertResponse!
   dataModelQueryInsertMany(id: String!, data: [JSON!]!): [InsertResponse!]!
   dataModelQueryUpdate(id: String!, where: JSON!, data: JSON!): Void
