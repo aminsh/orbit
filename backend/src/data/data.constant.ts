@@ -4,4 +4,4 @@ export enum DATA_MESSAGE {
   DATA_STORAGE_IS_INVALID= 'the data storage is invalid'
 }
 
-export const DATABASE_NAME_PRIFIX = 'db_'
+export const DATABASE_NAME_PREFIX = 'db_'

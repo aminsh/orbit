@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { DataTypes, Sequelize } from 'sequelize'
 import { DataStorage } from '../../schema/data-storage'
 import { DataModelFieldType } from '../../schema/enums'
-import { DATABASE_NAME_PRIFIX } from '../../data.constant'
+import { DATABASE_NAME_PREFIX } from '../../data.constant'
 import { DataModelRepository } from '../../repository/data-model-repository'
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SequelizeService {
   ) {}
 
   getDbName(dataStorage: DataStorage): string {
-    return `${ DATABASE_NAME_PRIFIX }${ dataStorage._id }`
+    return `${ DATABASE_NAME_PREFIX }${ dataStorage._id }`
   }
   
   async instance(dataStorage: DataStorage): Promise<Sequelize> {
