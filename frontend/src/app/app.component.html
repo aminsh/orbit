@@ -9,7 +9,7 @@
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Ant Design Of Angular</h1>
+        <h1>{{ authenticatedUser.name }}</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
@@ -37,13 +37,23 @@
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <span class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></span>
-        </span>
+      <div class="app-header d-flex align-items-center p-2">
+        <div class="w-75 h-100 d-flex justify-content-start align-items-center ml-">
+          <button nz-button nzType="text" nzShape="circle" nzSize="large"
+                  (click)="isCollapsed = !isCollapsed">
+            <span nz-icon
+                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+                  nzTheme="outline">
+            </span>
+          </button>
+        </div>
+
+        <div class="w-25 h-100 d-flex justify-content-end align-items-center">
+          <button nz-button nzType="text" nzShape="circle" nzSize="large"
+                  (click)="authenticationService.logout()">
+            <span nz-icon nzType="logout" nzTheme="outline"></span>
+          </button>
+        </div>
       </div>
     </nz-header>
     <nz-content>

@@ -14,16 +14,15 @@ import {NzMenuModule} from 'ng-zorro-antd/menu'
 import {UserModule} from "../user/user.module"
 import {TranslateModule, TranslateService} from '@ngx-translate/core'
 import enDictionary from './app.dictionary.en'
-import {DashboardComponent} from "./dashboard.component";
+import {DashboardComponent} from "./dashboard.component"
 import {GraphQLModule} from './graphql.module'
+import {NzButtonModule} from 'ng-zorro-antd/button'
+import {NzTypographyModule} from 'ng-zorro-antd/typography'
 
 registerLocaleData(en)
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-  ],
+  declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,12 +35,16 @@ registerLocaleData(en)
     TranslateModule.forRoot(),
     UserModule,
     GraphQLModule,
+    NzButtonModule,
+    NzTypographyModule,
   ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US },
-    //{provide: HTTP_INTERCEPTORS, useValue: ErrorHandlingInterceptor, multi: true},
+    {
+      provide: NZ_I18N,
+      useValue: en_US,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
   constructor(translateService: TranslateService) {
