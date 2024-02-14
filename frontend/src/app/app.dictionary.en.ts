@@ -5,4 +5,6 @@ export default {
   error_box_title: 'Please correct the errors',
   email: 'Email',
   password: 'Password',
+  register: 'Register',
+  forget_password: 'Forget password'
 }
