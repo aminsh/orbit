@@ -1,12 +1,12 @@
-import { BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common"
-import { User, UserStatus } from '../shema/user'
-import { RegisterDTO } from '../dto/register.dto'
-import { EqualsCaseInsensitive, hash } from '../../shared/utils'
-import { USER_MESSAGE } from '../user.constants'
-import { JWT_TOKEN_GENERATOR_SERVICE, JWTAccessToken, JwtTokenGeneratorService } from 'dx-nest-core/auth'
-import { UserRepository } from '../repository/user.repository'
-import { UpdateUserDTO } from '../dto/update-user.dto'
-import { LoginDTO } from '../dto/login.dto'
+import {BadRequestException, Inject, Injectable, NotFoundException, UnauthorizedException} from "@nestjs/common"
+import {User, UserStatus} from '../shema/user'
+import {RegisterDTO} from '../dto/register.dto'
+import {EqualsCaseInsensitive, hash} from '../../shared/utils'
+import {USER_MESSAGE} from '../user.constants'
+import {JWT_TOKEN_GENERATOR_SERVICE, JWTAccessToken, JwtTokenGeneratorService} from 'dx-nest-core/auth'
+import {UserRepository} from '../repository/user.repository'
+import {UpdateUserDTO} from '../dto/update-user.dto'
+import {LoginDTO} from '../dto/login.dto'
 
 @Injectable()
 export class UserService {
@@ -28,7 +28,7 @@ export class UserService {
     entity.name = dto.name
     entity.email = dto.email.toLowerCase()
     entity.password = hash(dto.password)
-    entity.status = UserStatus.Pending
+    entity.status = UserStatus.Active
 
     return this.userRepository.create(entity)
   }
