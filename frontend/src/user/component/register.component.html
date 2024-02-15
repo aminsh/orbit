@@ -1,0 +1,37 @@
+<form nz-form [formGroup]="form" class="register-form" (ngSubmit)="submit()">
+  <nz-alert
+    *ngIf="message"
+    nzType="error"
+    nzMessage="{{'error_box_title'|translate}}"
+    nzDescription="{{message|translate}}"
+    nzShowIcon
+  />
+
+  <nz-form-item class="mt-3">
+    <nz-form-control [nzErrorTip]="errorTemplate">
+      <input type="text" nz-input formControlName="name" placeholder="{{'name' | translate}}" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item class="mt-3">
+    <nz-form-control [nzErrorTip]="errorTemplate">
+      <input type="text" nz-input formControlName="email" placeholder="{{'email' | translate}}" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzErrorTip]="errorTemplate">
+      <input type="password" nz-input formControlName="password" placeholder="{{'password' | translate}}" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <button nz-button class="register-form-button register-form-margin" [nzType]="'primary'">{{ 'register'|translate }}</button>
+  {{ 'or'|translate }}
+  <a routerLink="/login">{{'log_in'|translate}}</a>
+</form>
+
+<ng-template #errorTemplate let-control>
+  <div *ngIf="control.errors?.['required']">{{'required_error_message'| translate}}</div>
+  <div *ngIf="control.errors?.['email']">{{'email_validation_error_message'| translate}}</div>
+</ng-template>
+

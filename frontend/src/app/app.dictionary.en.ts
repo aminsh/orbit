@@ -5,6 +5,11 @@ export default {
   error_box_title: 'Please correct the errors',
   email: 'Email',
   password: 'Password',
+  log_in: 'Log In',
   register: 'Register',
-  forget_password: 'Forget password'
+  forget_password: 'Forget password',
+  name: 'Name',
+  or: 'Or',
+  registration: 'Registration',
+  registration_success_message: 'Your registration has been successfully done, Please login'
 }
