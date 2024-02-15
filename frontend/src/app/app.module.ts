@@ -18,6 +18,7 @@ import {DashboardComponent} from "./dashboard.component"
 import {GraphQLModule} from './graphql.module'
 import {NzButtonModule} from 'ng-zorro-antd/button'
 import {NzTypographyModule} from 'ng-zorro-antd/typography'
+import {DataModule} from '../data/data.module'
 
 registerLocaleData(en)
 
@@ -33,10 +34,11 @@ registerLocaleData(en)
     NzLayoutModule,
     NzMenuModule,
     TranslateModule.forRoot(),
-    UserModule,
     GraphQLModule,
     NzButtonModule,
     NzTypographyModule,
+    UserModule,
+    DataModule,
   ],
   providers: [
     {

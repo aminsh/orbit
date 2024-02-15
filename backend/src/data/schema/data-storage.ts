@@ -1,8 +1,8 @@
 import mongoose from 'mongoose'
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
-import { Entity } from 'src/shared/type'
-import { User } from '../../user/shema/user'
-import { StorageStatus, StorageType } from './enums'
+import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose'
+import {Entity} from 'src/shared/type'
+import {User} from '../../user/shema/user'
+import {StorageStatus, StorageType} from './enums'
 
 @Schema({ timestamps: true })
 export class DataStorage extends Entity {
@@ -14,6 +14,9 @@ export class DataStorage extends Entity {
 
   @Prop({ enum: Object.values(StorageStatus) })
   status: StorageStatus
+
+  @Prop()
+  name: string
 }
 
 export const DataStorageSchema = SchemaFactory.createForClass(DataStorage)

@@ -1,4 +1,5 @@
 export default {
+  create_success_message: 'Created successfully',
   required_error_message: 'This field is required',
   email_validation_error_message: 'The email is invalid',
   login_error_message: 'The email or password is incorrect',
@@ -11,5 +12,9 @@ export default {
   name: 'Name',
   or: 'Or',
   registration: 'Registration',
-  registration_success_message: 'Your registration has been successfully done, Please login'
+  registration_success_message: 'Your registration has been successfully done, Please login',
+  new: 'New',
+  data: 'Data',
+  storage: 'Storage',
+  data_storage: 'Data storage',
 }

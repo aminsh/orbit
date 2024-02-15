@@ -6,7 +6,7 @@ import {environment} from '../environments/environment'
 import {HttpClientModule} from '@angular/common/http'
 import {Token} from '../user/user.type'
 import {setContext} from '@apollo/client/link/context'
-import {AUTHENTICATION_TOKEN} from '../user/user.constant';
+import {AUTHENTICATION_TOKEN} from '../user/user.constant'
 
 const uri = environment['graphql_root_url']
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
@@ -26,8 +26,19 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   });
 
   return {
-    link: ApolloLink.from([auth, httpLink.create({ uri })]),
+    link: ApolloLink.from([
+      auth,
+      httpLink.create({ uri })
+    ]),
     cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+      },
+      query: {
+        fetchPolicy: 'no-cache',
+      },
+    }
   };
 }
 

@@ -37,6 +37,7 @@ type DataStorageView {
   createdBy: UserView!
   type: StorageType!
   status: StorageStatus!
+  name: String!
 }
 
 enum StorageType {
@@ -129,6 +130,7 @@ input UpdateUserDTO {
 
 input DataStorageDto {
   type: StorageType!
+  name: String!
 }
 
 input DataModelDto {

@@ -1,7 +1,7 @@
-import { UserView } from 'src/user/dto/user.view'
-import { StorageStatus, StorageType } from '../schema/enums'
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
-import { PageableResponseBase } from 'src/shared/type'
+import {UserView} from 'src/user/dto/user.view'
+import {StorageStatus, StorageType} from '../schema/enums'
+import {Field, ObjectType, registerEnumType} from '@nestjs/graphql'
+import {PageableResponseBase} from 'src/shared/type'
 
 registerEnumType(StorageType, {
   name: 'StorageType'
@@ -24,6 +24,9 @@ export class DataStorageView {
 
   @Field(() => StorageStatus)
   status: StorageStatus
+
+  @Field()
+  name: string
 }
 
 

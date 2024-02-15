@@ -1,6 +1,6 @@
-import { DataStorage } from '../schema/data-storage'
-import { DataStorageView } from './data-storage.view'
-import { userAssembler } from 'src/user/dto/user-assembler'
+import {DataStorage} from '../schema/data-storage'
+import {DataStorageView} from './data-storage.view'
+import {userAssembler} from 'src/user/dto/user-assembler'
 
 export const assembleDataStorage = (entity: Partial<DataStorage>): DataStorageView => {
   if (!entity)
@@ -11,5 +11,6 @@ export const assembleDataStorage = (entity: Partial<DataStorage>): DataStorageVi
     createdBy: userAssembler(entity.createdBy),
     type: entity.type,
     status: entity.status,
+    name: entity.name,
   }
 }
