@@ -14,11 +14,23 @@ import {JsonPipe, NgIf} from '@angular/common';
 import {NzAlertModule} from 'ng-zorro-antd/alert'
 
 @NgModule({
-  imports: [NzFormModule, ReactiveFormsModule, NzInputModule, TranslateModule, NzButtonModule, NzCheckboxModule, RouterOutlet, RouterModule.forChild(routes), NgIf, JsonPipe, NzAlertModule],
+  imports: [
+    NzFormModule,
+    ReactiveFormsModule,
+    NzInputModule, TranslateModule,
+    NzButtonModule,
+    NzCheckboxModule,
+    RouterOutlet,
+    RouterModule.forChild(routes),
+    NgIf,
+    JsonPipe,
+    NzAlertModule,
+  ],
   declarations: [
     AuthLayoutComponent,
     LoginComponent,
     RegisterComponent,
   ],
 })
-export class UserModule {}
+export class UserModule {
+}
