@@ -4,7 +4,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms'
 import {makeFormDirty} from '../../core/utils/form.utils'
 import {RegisterDTOVariable, RegisterResponse, USER_REGISTER_REQUEST} from '../graphql/register.graphql'
 import {Router} from '@angular/router'
-import {TranslateService} from '@ngx-translate/core'
 import {NotifyService} from '../../core/service/notify.service'
 
 @Component({
@@ -16,7 +15,6 @@ export class RegisterComponent {
     private apollo: Apollo,
     private router: Router,
     private notify: NotifyService,
-    private translateService: TranslateService,
   ) {
   }
 
