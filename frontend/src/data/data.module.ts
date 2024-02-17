@@ -16,6 +16,7 @@ import {NzGridModule} from 'ng-zorro-antd/grid'
 import {NzInputModule} from 'ng-zorro-antd/input'
 import {NzSelectModule} from 'ng-zorro-antd/select'
 import {NzTableModule} from 'ng-zorro-antd/table'
+import {DataModelEntryComponent} from './component/data-model-entry.component'
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import {NzTableModule} from 'ng-zorro-antd/table'
     DataLayoutComponent,
     DataStorageComponent,
     DataStorageEntryComponent,
+    DataModelEntryComponent,
   ]
 })
 export class DataModule {}

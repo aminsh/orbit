@@ -23,6 +23,10 @@ export const GET_DATA_STORAGE = gql`
         id
         name
         type
+        createdBy {
+          name
+        }
+        status
       }
       count
     }
