@@ -4,6 +4,8 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table'
 import {DataStorage} from '../data.type'
 import {DataStorageQueryRequest, DataStorageResponse, GET_DATA_STORAGE} from '../graphql/data-storage.graphql'
 import {finalize} from 'rxjs'
+import {ModalFactoryService} from '../../core/service/modal-factory/modal-factory.service'
+import {DataStorageEntryComponent} from './data-storage-entry.component'
 
 @Component({
   templateUrl: './data-storage.component.html',
@@ -11,9 +13,13 @@ import {finalize} from 'rxjs'
 export class DataStorageComponent {
   constructor(
     private apollo: Apollo,
+    private modalFactory: ModalFactoryService,
   ) {
   }
 
+  create() {
+    this.modalFactory.create(DataStorageEntryComponent).afterClose.subscribe(() => this.refresh())
+  }
 
   isEntryOpen: boolean = false
   tableOptions = {
@@ -25,7 +31,7 @@ export class DataStorageComponent {
   }
 
   fetch(params: NzTableQueryParams) {
-    this.tableOptions.loading = true
+    this.tableOptions.loading = false
 
     this.apollo.query<DataStorageResponse, DataStorageQueryRequest>({
       query: GET_DATA_STORAGE,

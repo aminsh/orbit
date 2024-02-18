@@ -1,21 +1,25 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core'
 import {Apollo} from 'apollo-angular'
-import {NotifyService} from '../../core/service/notify.service'
 import {FormControl, FormGroup, Validators} from '@angular/forms'
 import {makeFormDirty} from '../../core/utils/form.utils'
 import {DATA_STORAGE_CREATE_REQUEST, DataStorageCreateVariable} from '../graphql/data-storage.graphql'
 import {StorageType} from '../data.type'
 import {finalize} from 'rxjs'
+import {ModalComponentType} from '../../core/service/modal-factory/modal-factory.type'
 
 @Component({
   selector: 'data-storage-entry',
   templateUrl: './data-storage-entry.component.html',
 })
-export class DataStorageEntryComponent {
+export class DataStorageEntryComponent implements ModalComponentType {
   constructor(
     private apollo: Apollo,
-    private notify: NotifyService,
+    //private notify: NotifyService,
   ) {
+  }
+
+  submit(): void {
+    this.save()
   }
 
   @Input() isOpen!: boolean
@@ -54,10 +58,10 @@ export class DataStorageEntryComponent {
       )
       .subscribe(
         () => {
-          this.notify.success({
+          /*this.notify.success({
             title: 'data_storage',
             content: 'create_message_successfully',
-          })
+          })*/
           this.close()
           this.complete.emit()
         },

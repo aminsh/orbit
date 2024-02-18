@@ -3,7 +3,8 @@
   {{ 'new'|translate }}
 </button>
 
-<data-storage-entry
+<data-model-entry
+  [item]="selectedItem"
   [(isOpen)]="isEntryOpen"
   (complete)="refresh()"
 />
@@ -21,16 +22,26 @@
   <tr>
     <th nzColumnKey="createdBy">Created by</th>
     <th nzColumnKey="name">Name</th>
-    <th nzColumnKey="type">Type</th>
-    <th nzColumnKey="status">Status</th>
+    <th nzColumnKey="storage">Storage</th>
+    <th style="width: 30px"></th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let it of tableOptions.data">
     <td>{{ it.createdBy.name }}</td>
     <td>{{ it.name }}</td>
-    <td>{{ it.type }}</td>
-    <td>{{ it.status }}</td>
+    <td>{{ it.dataStorage.name }}</td>
+    <td class="d-flex justify-content-end">
+      <button
+        nz-button
+        nzType="text"
+        nzShape="circle"
+        nz-tooltip="{{'edit'|translate}}"
+        nzTooltipPlacement="bottom"
+        (click)="edit(it)">
+        <span nz-icon nzType="edit" nzTheme="outline"></span>
+      </button>
+    </td>
   </tr>
   </tbody>
 </nz-table>

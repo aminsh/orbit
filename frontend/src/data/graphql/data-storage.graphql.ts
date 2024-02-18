@@ -17,7 +17,7 @@ export interface DataStorageCreateVariable {
 }
 
 export const GET_DATA_STORAGE = gql`
-  query getDataStorages($request: PageableRequest!) {
+  query getDataStorages($request: DataStoragePageableRequest!) {
     dataStoragesFind(request: $request) {
       data {
         id
@@ -46,3 +46,4 @@ export interface DataStorageResponse {
     count: number,
   }
 }
+

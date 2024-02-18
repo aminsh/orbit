@@ -1,4 +1,4 @@
-<nz-modal
+<!--<nz-modal
   [(nzVisible)]="isOpen"
   nzTitle="{{'new'|translate}} {{'data_storage'|translate}}"
   (nzOnCancel)="close()"
@@ -7,7 +7,7 @@
   (nzOnOk)="save()"
   nzClosable="false"
 >
-  <ng-container *nzModalContent>
+  <ng-container *nzModalContent>-->
     <nz-alert
       *ngIf="message"
       nzType="error"
@@ -37,8 +37,8 @@
         </nz-form-control>
       </nz-form-item>
     </form>
-  </ng-container>
-</nz-modal>
+<!--  </ng-container>
+</nz-modal>-->
 
 <ng-template #errorTemplate let-control>
   <div *ngIf="control.errors?.['required']">{{'required_error_message'| translate}}</div>

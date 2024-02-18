@@ -1,5 +1,6 @@
 export default {
   create_success_message: 'Created successfully',
+  update_success_message: 'Updated successfully',
   required_error_message: 'This field is required',
   email_validation_error_message: 'The email is invalid',
   login_error_message: 'The email or password is incorrect',
@@ -14,7 +15,13 @@ export default {
   registration: 'Registration',
   registration_success_message: 'Your registration has been successfully done, Please login',
   new: 'New',
+  add: 'Add',
+  edit: 'Edit',
+  remove: 'Remove',
   data: 'Data',
   storage: 'Storage',
   data_storage: 'Data storage',
+  data_model: 'Data model',
+  model: 'Model',
+  field: 'Field'
 }

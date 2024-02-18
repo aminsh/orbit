@@ -9,26 +9,26 @@ import {setContext} from '@apollo/client/link/context'
 import {AUTHENTICATION_TOKEN} from '../user/user.constant'
 
 const uri = environment['graphql_root_url']
+
 export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
   const auth = setContext(() => {
     const tokenJson = localStorage.getItem(AUTHENTICATION_TOKEN)
     const token: Token = tokenJson ? JSON.parse(tokenJson) : null
 
-    if (token === null) {
+    if (token === null)
       return {}
-    } else {
-      return {
-        headers: {
-          Authorization: `${token.token_type} ${token.access_token}`,
-        },
-      }
+
+    return {
+      headers: {
+        Authorization: `${token.token_type} ${token.access_token}`,
+      },
     }
   });
 
   return {
     link: ApolloLink.from([
       auth,
-      httpLink.create({ uri })
+      httpLink.create({uri}),
     ]),
     cache: new InMemoryCache(),
     defaultOptions: {
@@ -38,7 +38,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
       query: {
         fetchPolicy: 'no-cache',
       },
-    }
+    },
   };
 }
 
@@ -55,4 +55,5 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     },
   ],
 })
-export class GraphQLModule {}
+export class GraphQLModule {
+}

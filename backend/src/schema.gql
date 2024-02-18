@@ -83,10 +83,16 @@ scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/fi
 
 type Query {
   userAuthenticated: UserView!
-  dataStoragesFind(request: PageableRequest!): DataStoragePageableResponse!
+  dataStoragesFind(request: DataStoragePageableRequest!): DataStoragePageableResponse!
   dataModelsFind(request: PageableRequest!): DataModelPageableResponse!
   dataModelQueryFind(id: String!, query: JSON): QueryFindAndCountResponse!
   dataModelQueryFindOne(id: String!, query: JSON!): JSON!
+}
+
+input DataStoragePageableRequest {
+  take: Int!
+  skip: Int!
+  search: String
 }
 
 input PageableRequest {

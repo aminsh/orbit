@@ -9,7 +9,7 @@ import {NzButtonModule} from 'ng-zorro-antd/button'
 import {DataStorageEntryComponent} from './component/data-storage-entry.component'
 import {NzModalModule} from 'ng-zorro-antd/modal'
 import {ReactiveFormsModule} from '@angular/forms'
-import {NgForOf, NgIf} from '@angular/common'
+import {JsonPipe, NgForOf, NgIf} from '@angular/common'
 import {NzAlertModule} from 'ng-zorro-antd/alert'
 import {NzFormModule} from 'ng-zorro-antd/form'
 import {NzGridModule} from 'ng-zorro-antd/grid'
@@ -17,6 +17,12 @@ import {NzInputModule} from 'ng-zorro-antd/input'
 import {NzSelectModule} from 'ng-zorro-antd/select'
 import {NzTableModule} from 'ng-zorro-antd/table'
 import {DataModelEntryComponent} from './component/data-model-entry.component'
+import {DataModelsComponent, ModalCustomComponent} from './component/data-models.component'
+import {NzListModule} from 'ng-zorro-antd/list'
+import {NzCardModule} from 'ng-zorro-antd/card'
+import {NzDividerModule} from 'ng-zorro-antd/divider'
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip'
+import {NzCheckboxModule} from 'ng-zorro-antd/checkbox'
 
 @NgModule({
   imports: [
@@ -35,6 +41,12 @@ import {DataModelEntryComponent} from './component/data-model-entry.component'
     NzSelectModule,
     NgForOf,
     NzTableModule,
+    NzListModule,
+    NzCardModule,
+    NzDividerModule,
+    NzToolTipModule,
+    NzCheckboxModule,
+    JsonPipe,
   ],
   providers: [],
   declarations: [
@@ -42,6 +54,8 @@ import {DataModelEntryComponent} from './component/data-model-entry.component'
     DataStorageComponent,
     DataStorageEntryComponent,
     DataModelEntryComponent,
+    DataModelsComponent,
+    ModalCustomComponent,
   ]
 })
 export class DataModule {}

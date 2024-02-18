@@ -1,14 +1,15 @@
 import {UserView} from 'src/user/dto/user.view'
 import {StorageStatus, StorageType} from '../schema/enums'
-import {Field, ObjectType, registerEnumType} from '@nestjs/graphql'
-import {PageableResponseBase} from 'src/shared/type'
+import {Field, InputType, ObjectType, registerEnumType} from '@nestjs/graphql'
+import {PageableRequest, PageableResponseBase} from 'src/shared/type'
+import {IsOptional, IsString} from 'class-validator'
 
 registerEnumType(StorageType, {
-  name: 'StorageType'
+  name: 'StorageType',
 })
 
 registerEnumType(StorageStatus, {
-  name: 'StorageStatus'
+  name: 'StorageStatus',
 })
 
 @ObjectType()
@@ -34,4 +35,12 @@ export class DataStorageView {
 export class DataStoragePageableResponse extends PageableResponseBase<DataStorageView> {
   @Field(() => [DataStorageView])
   data: DataStorageView[]
+}
+
+@InputType()
+export class DataStoragePageableRequest extends PageableRequest {
+  @Field(() => String, {nullable: true})
+  @IsString()
+  @IsOptional()
+  search: string
 }
