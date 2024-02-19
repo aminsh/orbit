@@ -17,7 +17,7 @@ import {NzInputModule} from 'ng-zorro-antd/input'
 import {NzSelectModule} from 'ng-zorro-antd/select'
 import {NzTableModule} from 'ng-zorro-antd/table'
 import {DataModelEntryComponent} from './component/data-model-entry.component'
-import {DataModelsComponent, ModalCustomComponent} from './component/data-models.component'
+import {DataModelsComponent} from './component/data-models.component'
 import {NzListModule} from 'ng-zorro-antd/list'
 import {NzCardModule} from 'ng-zorro-antd/card'
 import {NzDividerModule} from 'ng-zorro-antd/divider'
@@ -57,7 +57,6 @@ import {NzSpinModule} from 'ng-zorro-antd/spin'
     DataStorageEntryComponent,
     DataModelEntryComponent,
     DataModelsComponent,
-    ModalCustomComponent,
   ]
 })
 export class DataModule {}
