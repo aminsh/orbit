@@ -18,6 +18,14 @@ export class DataStorageEntryComponent implements ModalComponentType {
   ) {
   }
 
+  get canOK(): boolean {
+    if(this.form.valid)
+      return true
+
+    makeFormDirty(this.form)
+    return false
+  }
+
   submit(): void {
     this.save()
   }
@@ -41,8 +49,8 @@ export class DataStorageEntryComponent implements ModalComponentType {
   }
 
   save() {
-    if (!this.form.valid)
-      return makeFormDirty(this.form)
+    if(!this.canOK)
+      return
 
     this.message = ''
     this.isSaving = true

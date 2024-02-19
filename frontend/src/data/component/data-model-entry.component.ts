@@ -114,12 +114,18 @@ export class DataModelEntryComponent implements OnInit, ModalComponentType {
   message!: string
   isSaving: boolean = false
 
+  get canOK(): boolean {
+    if (this.form.valid)
+      return true
+
+    makeFormDirty(this.form)
+    this.fields.controls.forEach(f => makeFormDirty(f as FormGroup))
+    return false
+  }
+
   submit() {
-    if (!this.form.valid) {
-      makeFormDirty(this.form)
-      this.fields.controls.forEach(f => makeFormDirty(f as FormGroup))
+    if (!this.canOK)
       return
-    }
 
     this.message = ''
     this.isSaving = true

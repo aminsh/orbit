@@ -20,6 +20,8 @@ export class ModalFactoryService {
       nzData: data,
       nzContent: Component,
       nzOnOk: () => {
+        if(!instance.canOK)
+          throw {message: 'form is invalid'}
         instance.submit()
       },
       nzClosable: false,
