@@ -18,11 +18,15 @@ export default {
   add: 'Add',
   edit: 'Edit',
   remove: 'Remove',
+  loading: 'Loading',
+  created_by: 'Created by',
+  status: 'Status',
   type: 'Type',
   data: 'Data',
   storage: 'Storage',
   data_storage: 'Data storage',
   data_model: 'Data model',
   model: 'Model',
-  field: 'Field'
+  field: 'Field',
+
 }
