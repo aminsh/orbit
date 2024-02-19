@@ -14,6 +14,12 @@ export const DATA_MODEL_UPDATE_REQUEST = gql`
   }
 `
 
+export const DATA_MODEL_REMOVE_REQUEST = gql`
+    mutation DataModelRemoveRequest($id: String!) {
+      dataModelRemove(id: $id)
+    }
+`
+
 export const GET_DATA_MODELS = gql`
     query GetDataModels($request: PageableRequest!) {
       dataModelsFind(request: $request) {

@@ -1,6 +1,7 @@
 export default {
   create_success_message: 'Created successfully',
   update_success_message: 'Updated successfully',
+  remove_success_message: 'Removed successfully',
   required_error_message: 'This field is required',
   email_validation_error_message: 'The email is invalid',
   login_error_message: 'The email or password is incorrect',

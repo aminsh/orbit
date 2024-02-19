@@ -35,6 +35,17 @@
         (click)="showEntry(it.id)">
         <span nz-icon nzType="edit" nzTheme="outline"></span>
       </button>
+
+      <button
+        nz-button
+        nzDanger
+        nzType="text"
+        nzShape="circle"
+        nz-tooltip="{{'remove'|translate}}"
+        nzTooltipPlacement="bottom"
+        (click)="remove(it.id)">
+        <span nz-icon nzType="delete" nzTheme="outline"></span>
+      </button>
     </td>
   </tr>
   </tbody>

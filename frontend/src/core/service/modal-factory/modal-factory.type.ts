@@ -8,3 +8,11 @@ export interface ModalComponentType {
 export type ModalOptionsPlus = Omit<ModalOptions, 'nzTitle'> & {
   nzTitle: string | string[]
 }
+
+export interface ModalConfirmParameter {
+  title: string
+  content: string,
+  handleOk: () => void,
+  handleCancel?: () => void,
+}
+

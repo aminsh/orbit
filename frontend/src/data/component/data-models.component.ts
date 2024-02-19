@@ -1,13 +1,13 @@
-import {Component, inject, ViewContainerRef} from '@angular/core'
+import {Component, ViewContainerRef} from '@angular/core'
 import {Apollo} from 'apollo-angular'
 import {NzTableQueryParams} from 'ng-zorro-antd/table'
 import {DataModel} from '../data.type'
 import {finalize} from 'rxjs'
 import {Identity, Nullable, QueryPageableRequest, QueryPageableResponse} from '../../core/type'
-import {GET_DATA_MODELS} from '../graphql/data-model.graphql'
-import {NZ_MODAL_DATA, NzModalRef, NzModalService} from 'ng-zorro-antd/modal'
+import {DATA_MODEL_REMOVE_REQUEST, GET_DATA_MODELS} from '../graphql/data-model.graphql'
 import {ModalFactoryService} from '../../core/service/modal-factory/modal-factory.service'
 import {DataModelEntryComponent} from './data-model-entry.component'
+import {NotifyService} from '../../core/service/notify.service'
 
 @Component({
   templateUrl: './data-models.component.html',
@@ -17,11 +17,9 @@ export class DataModelsComponent {
     private modalService: ModalFactoryService,
     private viewContainerRef: ViewContainerRef,
     private apollo: Apollo,
+    private notify: NotifyService,
   ) {
   }
-
-  isEntryOpen: boolean = false
-  selectedItem?: DataModel
 
   tableOptions = {
     total: 0,
@@ -65,19 +63,26 @@ export class DataModelsComponent {
   refresh() {
     this.fetch({pageSize: this.tableOptions.pageSize, pageIndex: 1} as NzTableQueryParams)
   }
-}
 
-@Component({
-  template: `
-    <span>{{ nzModalData| json }}</span>
-    <a (click)="ok()">OK</a>
-  `
-})
-export class ModalCustomComponent {
-  readonly nzModalData = inject(NZ_MODAL_DATA)
-  readonly #modal = inject(NzModalRef)
-
-  ok() {
-    this.#modal.destroy({result: 'SUCCESS'})
+  remove(id: string) {
+    this.modalService.confirm({
+      title: 'Removing data model',
+      content: 'Are you sure ?',
+      handleOk: () => {
+        this.apollo.query<void, Identity>({
+          query: DATA_MODEL_REMOVE_REQUEST,
+          variables: {
+            id,
+          }
+        }).subscribe(() => {
+          this.notify.success({
+            title: 'data_model',
+            content: 'remove_success_message',
+          })
+          this.refresh()
+        })
+      },
+    })
   }
 }
+
