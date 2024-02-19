@@ -23,6 +23,7 @@ import {NzCardModule} from 'ng-zorro-antd/card'
 import {NzDividerModule} from 'ng-zorro-antd/divider'
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip'
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox'
+import {NzSpinModule} from 'ng-zorro-antd/spin'
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox'
     NzToolTipModule,
     NzCheckboxModule,
     JsonPipe,
+    NzSpinModule,
   ],
   providers: [],
   declarations: [

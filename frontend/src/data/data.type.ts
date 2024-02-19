@@ -13,12 +13,14 @@ export interface DataModel {
   createdBy: User,
   name: string
   dataStorage: DataStorage
-  fields: {
-    name: string
-    label: string
-    type: DataModelFieldType
-    required: boolean
-  }[]
+  fields: DataModelField[]
+}
+
+export interface DataModelField {
+  name: string
+  label: string
+  type: DataModelFieldType
+  required: boolean
 }
 
 export interface DataModelDto {

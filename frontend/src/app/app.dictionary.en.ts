@@ -18,6 +18,7 @@ export default {
   add: 'Add',
   edit: 'Edit',
   remove: 'Remove',
+  type: 'Type',
   data: 'Data',
   storage: 'Storage',
   data_storage: 'Data storage',
