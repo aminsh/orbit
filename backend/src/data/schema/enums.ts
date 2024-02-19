@@ -1,6 +1,6 @@
 export enum DataModelFieldType {
   Text = 'Text',
-  Integer = 'Text',
+  Integer = 'Integer',
   Float = 'Float',
   Boolean = 'Boolean',
 }
