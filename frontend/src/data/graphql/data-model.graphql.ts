@@ -31,3 +31,22 @@ export const GET_DATA_MODELS = gql`
       }
     }
 `
+
+export const GET_DATA_MODEL_BY_ID = gql`
+  query GetDataModelById($id: String!) {
+    dataModelFindById(id: $id) {
+      id
+      name
+      dataStorage {
+        id
+        name
+      }
+      fields {
+        name
+        label
+        type
+        required
+      }
+    }
+  }
+`

@@ -85,6 +85,7 @@ type Query {
   userAuthenticated: UserView!
   dataStoragesFind(request: DataStoragePageableRequest!): DataStoragePageableResponse!
   dataModelsFind(request: PageableRequest!): DataModelPageableResponse!
+  dataModelFindById(id: String!): DataModelView!
   dataModelQueryFind(id: String!, query: JSON): QueryFindAndCountResponse!
   dataModelQueryFindOne(id: String!, query: JSON!): JSON!
 }
