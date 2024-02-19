@@ -6,6 +6,7 @@ import {DataStorageQueryRequest, DataStorageResponse, GET_DATA_STORAGE} from '..
 import {finalize} from 'rxjs'
 import {ModalFactoryService} from '../../core/service/modal-factory/modal-factory.service'
 import {DataStorageEntryComponent} from './data-storage-entry.component'
+import {ActivatedRoute} from '@angular/router'
 
 @Component({
   templateUrl: './data-storage.component.html',
@@ -15,8 +16,12 @@ export class DataStorageComponent {
     private apollo: Apollo,
     private modalFactory: ModalFactoryService,
     private viewContainerRef: ViewContainerRef,
+    private route: ActivatedRoute,
   ) {
+    this.data = route.snapshot.data as any
   }
+
+  data!: {message: string}
 
   create() {
     this.modalFactory.create(DataStorageEntryComponent, null, {
