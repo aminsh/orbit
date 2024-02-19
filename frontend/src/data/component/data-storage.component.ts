@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, ViewContainerRef} from '@angular/core'
 import {Apollo} from 'apollo-angular'
 import {NzTableQueryParams} from 'ng-zorro-antd/table'
 import {DataStorage} from '../data.type'
@@ -14,14 +14,19 @@ export class DataStorageComponent {
   constructor(
     private apollo: Apollo,
     private modalFactory: ModalFactoryService,
+    private viewContainerRef: ViewContainerRef,
   ) {
   }
 
   create() {
-    this.modalFactory.create(DataStorageEntryComponent).afterClose.subscribe(() => this.refresh())
+    this.modalFactory.create(DataStorageEntryComponent, null, {
+      nzTitle: ['new', 'data_storage'],
+      nzViewContainerRef: this.viewContainerRef,
+    })
+      .afterClose
+      .subscribe(() => this.refresh())
   }
 
-  isEntryOpen: boolean = false
   tableOptions = {
     total: 0,
     data: [] as DataStorage[],

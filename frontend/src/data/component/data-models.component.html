@@ -1,13 +1,7 @@
-<button nz-button nzType="primary" (click)="create()">
+<button nz-button nzType="primary" (click)="showEntry()">
   <span nz-icon nzType="plus" nzTheme="outline"></span>
   {{ 'new'|translate }}
 </button>
-
-<data-model-entry
-  [item]="selectedItem"
-  [(isOpen)]="isEntryOpen"
-  (complete)="refresh()"
-/>
 
 <nz-table
   class="mt-3"
@@ -38,7 +32,7 @@
         nzShape="circle"
         nz-tooltip="{{'edit'|translate}}"
         nzTooltipPlacement="bottom"
-        (click)="edit(it)">
+        (click)="showEntry(it.id)">
         <span nz-icon nzType="edit" nzTheme="outline"></span>
       </button>
     </td>

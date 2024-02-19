@@ -1,23 +1,30 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core'
+import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core'
 import {Apollo, gql} from 'apollo-angular'
 import {NotifyService} from '../../core/service/notify.service'
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {DataModel, DataModelDto, DataModelFieldType, DataStorage} from '../data.type'
+import {DataModelField, DataModel, DataModelDto, DataModelFieldType, DataStorage} from '../data.type'
 import {makeFormDirty} from '../../core/utils/form.utils'
 import {finalize} from 'rxjs'
 import {
+  Identity,
   MutationCreateRequestParameters,
   MutationUpdateRequestParameters,
   QueryPageableRequest,
   QueryPageableResponse,
 } from '../../core/type'
-import {DATA_MODEL_CREATE_REQUEST, DATA_MODEL_UPDATE_REQUEST} from '../graphql/data-model.graphql'
+import {
+  DATA_MODEL_CREATE_REQUEST,
+  DATA_MODEL_UPDATE_REQUEST,
+  GET_DATA_MODEL_BY_ID,
+} from '../graphql/data-model.graphql'
+import {ModalComponentType} from '../../core/service/modal-factory/modal-factory.type'
+import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal'
 
 @Component({
   selector: 'data-model-entry',
   templateUrl: './data-model-entry.component.html',
 })
-export class DataModelEntryComponent implements OnInit, OnChanges {
+export class DataModelEntryComponent implements OnInit, ModalComponentType {
   constructor(
     private apollo: Apollo,
     private notify: NotifyService,
@@ -25,40 +32,63 @@ export class DataModelEntryComponent implements OnInit, OnChanges {
   ) {
   }
 
-  ngOnInit(): void {
-    this.mapToForm({} as DataModel)
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('[NGCHange]', changes)
-    const value = (changes?.['item']?.currentValue || {}) as DataModel
-    this?.mapToForm(value)
-  }
-
-  mapToForm(value: DataModel) {
-    this.form = this.fb.group({
-      name: [value.name, [Validators.required]],
-      dataStorageId: [value.dataStorage, [Validators.required]],
-      fields: this.fb.array([
-        ...value.fields?.map(field => this.fb.group({
-          name: [field.name, [Validators.required]],
-          label: [field.label],
-          type: [field.type, [Validators.required]],
-          required: [field.required]
-        }))
-      ]),
-    })
-  }
-
-  @Input() isOpen!: boolean
-  @Input() item?: DataModel
-  @Output() isOpenChange = new EventEmitter<boolean>()
-  @Output() complete = new EventEmitter()
-
+  data: Identity = inject(NZ_MODAL_DATA)
   storages!: DataStorage[]
   storageQueryLoading!: boolean
-
   form!: FormGroup
+  isLoading: boolean = false
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      name: ['', [Validators.required]],
+      dataStorageId: ['', [Validators.required]],
+      fields: this.fb.array([]),
+    })
+
+    if (!this.data)
+      return
+
+    this.isLoading = true
+
+    this.apollo.query<{ dataModelFindById: DataModel }, Identity>({
+      query: GET_DATA_MODEL_BY_ID,
+      variables: {
+        id: this.data.id,
+      },
+    })
+      .pipe(
+        finalize(() => this.isLoading = false),
+      )
+      .subscribe(result => {
+        const {name, dataStorage, fields} = result.data.dataModelFindById
+        this.form.setValue({
+          name,
+          dataStorageId: dataStorage.id,
+          fields: []
+        })
+
+        this.storages = [dataStorage]
+        fields.forEach(field => this.fields.push(this.createFields(field)))
+      })
+  }
+
+  private createFields(value: Partial<DataModelField>) {
+    const form = this.fb.group({
+      name: ['', [Validators.required]],
+      label: [''],
+      type: ['', [Validators.required]],
+      required: [false]
+    })
+
+    form.setValue({
+      name: value.name || null,
+      label: value.label || null,
+      type: value.type || null,
+      required: value.required || false,
+    })
+
+    return form
+  }
 
   get fields(): FormArray {
     return (this.form?.get('fields') || []) as FormArray
@@ -84,11 +114,7 @@ export class DataModelEntryComponent implements OnInit, OnChanges {
   message!: string
   isSaving: boolean = false
 
-  close() {
-    this.isOpenChange.emit(false)
-  }
-
-  save() {
+  submit() {
     if (!this.form.valid) {
       makeFormDirty(this.form)
       this.fields.controls.forEach(f => makeFormDirty(f as FormGroup))
@@ -98,7 +124,7 @@ export class DataModelEntryComponent implements OnInit, OnChanges {
     this.message = ''
     this.isSaving = true
 
-    const id = this.item ? this.item.id :  null
+    const id = this.data ? this.data.id : null
 
     const request$ = id
       ? this.apollo.mutate<any, MutationUpdateRequestParameters<DataModelDto>>({
@@ -125,8 +151,6 @@ export class DataModelEntryComponent implements OnInit, OnChanges {
             title: 'data_model',
             content: id ? 'update_success_message' : 'create_success_message',
           })
-          this.close()
-          this.complete.emit()
         },
         error => {
           this.message = error.message

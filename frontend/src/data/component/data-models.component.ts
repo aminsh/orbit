@@ -3,16 +3,18 @@ import {Apollo} from 'apollo-angular'
 import {NzTableQueryParams} from 'ng-zorro-antd/table'
 import {DataModel} from '../data.type'
 import {finalize} from 'rxjs'
-import {QueryPageableRequest, QueryPageableResponse} from '../../core/type'
+import {Identity, Nullable, QueryPageableRequest, QueryPageableResponse} from '../../core/type'
 import {GET_DATA_MODELS} from '../graphql/data-model.graphql'
 import {NZ_MODAL_DATA, NzModalRef, NzModalService} from 'ng-zorro-antd/modal'
+import {ModalFactoryService} from '../../core/service/modal-factory/modal-factory.service'
+import {DataModelEntryComponent} from './data-model-entry.component'
 
 @Component({
   templateUrl: './data-models.component.html',
 })
 export class DataModelsComponent {
   constructor(
-    private nzModalService: NzModalService,
+    private modalService: ModalFactoryService,
     private viewContainerRef: ViewContainerRef,
     private apollo: Apollo,
   ) {
@@ -29,30 +31,14 @@ export class DataModelsComponent {
     loading: false,
   }
 
-  create() {
-    /*this.selectedItem = undefined
-    this.isEntryOpen = true*/
-
-    const modal = this.nzModalService.create({
-      nzTitle: 'Test',
+  showEntry(id?: string) {
+    const params: Nullable<Identity> = id ? {id} : null
+    this.modalService.create(DataModelEntryComponent, params, {
+      nzTitle: [id ? 'edit' : 'new', 'data_model'],
       nzViewContainerRef: this.viewContainerRef,
-      nzData: {
-        id: 'fs',
-        name: 'Amin',
-      },
-      nzContent: ModalCustomComponent,
-      nzOnOk: data => {
-        instance.ok()
-      }
     })
-
-    const instance = modal.getContentComponent()
-    modal.afterClose.subscribe(result => console.log('[afterClose] The result is:', result))
-  }
-
-  edit(item: DataModel) {
-    this.selectedItem = item
-    this.isEntryOpen = true
+      .afterClose
+      .subscribe(() => this.refresh())
   }
 
   fetch(params: NzTableQueryParams) {
@@ -83,7 +69,7 @@ export class DataModelsComponent {
 
 @Component({
   template: `
-    <span>{{nzModalData| json}}</span>
+    <span>{{ nzModalData| json }}</span>
     <a (click)="ok()">OK</a>
   `
 })

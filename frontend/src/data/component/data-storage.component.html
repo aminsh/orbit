@@ -3,11 +3,6 @@
   {{ 'new'|translate }}
 </button>
 
-<data-storage-entry
-  [(isOpen)]="isEntryOpen"
-  (complete)="refresh()"
-/>
-
 <nz-table
   class="mt-3"
   [nzTotal]="tableOptions.total"
