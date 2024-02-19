@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core'
+import {Component,inject,OnInit} from '@angular/core'
 import {Apollo, gql} from 'apollo-angular'
 import {NotifyService} from '../../core/service/notify.service'
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
