@@ -29,5 +29,7 @@ export default {
   data_model: 'Data model',
   model: 'Model',
   field: 'Field',
+  required: 'Required',
+  label: 'Label',
 
 }
