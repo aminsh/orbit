@@ -1,5 +1,5 @@
-import {gql} from 'apollo-angular'
-import {DataStorage, StorageType} from '../data.type'
+import { gql } from 'apollo-angular'
+import { DataStorage, StorageType } from '../data.type'
 
 export const DATA_STORAGE_CREATE_REQUEST = gql`
   mutation dataStorageCreateRequest($dto: DataStorageDto!) {
@@ -15,6 +15,12 @@ export interface DataStorageCreateVariable {
     type: StorageType,
   }
 }
+
+export const DATA_STORAGE_INITIALIZE_REQUEST = gql`
+  mutation dataStorageInitializeRequest($id: String!) {
+    dataStorageInitialize(id: $id)
+  }
+`
 
 export const GET_DATA_STORAGE = gql`
   query getDataStorages($request: DataStoragePageableRequest!) {

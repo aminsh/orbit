@@ -18,6 +18,7 @@
     <th nzColumnKey="name">{{'name'|translate}}</th>
     <th nzColumnKey="type">{{'type'|translate}}</th>
     <th nzColumnKey="status">{{'status'|translate}}</th>
+    <th style="width: 30px"></th>
   </tr>
   </thead>
   <tbody>
@@ -25,7 +26,31 @@
     <td>{{ it.createdBy.name }}</td>
     <td>{{ it.name }}</td>
     <td>{{ it.type }}</td>
-    <td>{{ it.status }}</td>
+    <td>
+      <nz-tag [nzColor]="statusColor[it.status]">{{ it.status }}</nz-tag>
+    </td>
+    <td>
+      <button
+        [hidden]="it.status !== StorageStatus.Pending"
+        nz-button
+        nzType="text"
+        nzShape="circle"
+        nz-tooltip="{{'edit'|translate}}"
+        nzTooltipPlacement="bottom"
+        (click)="initialize(it.id)">
+        <span nz-icon nzType="play-circle" nzTheme="outline"></span>
+      </button>
+      <button
+        [hidden]="it.status !== StorageStatus.Pending"
+        nz-button
+        nzType="text"
+        nzShape="circle"
+        nz-tooltip="{{'edit'|translate}}"
+        nzTooltipPlacement="bottom"
+        (click)="initialize(it.id)">
+        <span nz-icon nzType="sync" nzTheme="outline"></span>
+      </button>
+    </td>
   </tr>
   </tbody>
 </nz-table>

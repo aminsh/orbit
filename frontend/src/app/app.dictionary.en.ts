@@ -31,5 +31,5 @@ export default {
   field: 'Field',
   required: 'Required',
   label: 'Label',
-
+  data_storage_initialized_success_message: 'Initialized successfully',
 }
