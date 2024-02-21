@@ -1,11 +1,13 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core'
-import {Apollo} from 'apollo-angular'
-import {FormControl, FormGroup, Validators} from '@angular/forms'
-import {makeFormDirty} from '../../core/utils/form.utils'
-import {DATA_STORAGE_CREATE_REQUEST, DataStorageCreateVariable} from '../graphql/data-storage.graphql'
-import {StorageType} from '../data.type'
-import {finalize} from 'rxjs'
-import {ModalComponentType} from '../../core/service/modal-factory/modal-factory.type'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
+import { Apollo } from 'apollo-angular'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { makeFormDirty } from '../../core/utils/form.utils'
+import { DATA_STORAGE_CREATE_REQUEST, DataStorageCreateVariable } from '../graphql/data-storage.graphql'
+import { StorageType } from '../data.type'
+import { finalize } from 'rxjs'
+import { ModalComponentType } from '../../core/service/modal-factory/modal-factory.type'
+import { OrbNotifyService } from '../../core/service/notify.service'
+import { OrbTranslateService } from '../../core/service/translate'
 
 @Component({
   selector: 'data-storage-entry',
@@ -14,7 +16,8 @@ import {ModalComponentType} from '../../core/service/modal-factory/modal-factory
 export class DataStorageEntryComponent implements ModalComponentType {
   constructor(
     private apollo: Apollo,
-    //private notify: NotifyService,
+    private notify: OrbNotifyService,
+    private translate: OrbTranslateService,
   ) {
   }
 
@@ -66,10 +69,10 @@ export class DataStorageEntryComponent implements ModalComponentType {
       )
       .subscribe(
         () => {
-          /*this.notify.success({
-            title: 'data_storage',
-            content: 'create_message_successfully',
-          })*/
+          this.notify.success({
+            title: this.translate.get('data_storage'),
+            content: this.translate.get('create_message_successfully'),
+          })
           this.close()
           this.complete.emit()
         },

@@ -1,13 +1,14 @@
-import {Component, ViewContainerRef} from '@angular/core'
-import {Apollo} from 'apollo-angular'
-import {NzTableQueryParams} from 'ng-zorro-antd/table'
-import {DataModel} from '../data.type'
-import {finalize} from 'rxjs'
-import {Identity, Nullable, QueryPageableRequest, QueryPageableResponse} from '../../core/type'
-import {DATA_MODEL_REMOVE_REQUEST, GET_DATA_MODELS} from '../graphql/data-model.graphql'
-import {ModalFactoryService} from '../../core/service/modal-factory/modal-factory.service'
-import {DataModelEntryComponent} from './data-model-entry.component'
-import {NotifyService} from '../../core/service/notify.service'
+import { Component, ViewContainerRef } from '@angular/core'
+import { Apollo } from 'apollo-angular'
+import { NzTableQueryParams } from 'ng-zorro-antd/table'
+import { DataModel } from '../data.type'
+import { finalize } from 'rxjs'
+import { Identity, Nullable, QueryPageableRequest, QueryPageableResponse } from '../../core/type'
+import { DATA_MODEL_REMOVE_REQUEST, GET_DATA_MODELS } from '../graphql/data-model.graphql'
+import { ModalFactoryService } from '../../core/service/modal-factory/modal-factory.service'
+import { DataModelEntryComponent } from './data-model-entry.component'
+import { OrbNotifyService } from '../../core/service/notify.service'
+import { OrbTranslateService } from '../../core/service/translate'
 
 @Component({
   templateUrl: './data-models.component.html',
@@ -17,7 +18,8 @@ export class DataModelsComponent {
     private modalService: ModalFactoryService,
     private viewContainerRef: ViewContainerRef,
     private apollo: Apollo,
-    private notify: NotifyService,
+    private notify: OrbNotifyService,
+    private translate: OrbTranslateService,
   ) {
   }
 
@@ -66,7 +68,7 @@ export class DataModelsComponent {
 
   remove(id: string) {
     this.modalService.confirm({
-      title: 'Removing data model',
+      title: this.translate.get('Removing data model'),
       content: 'Are you sure ?',
       handleOk: () => {
         this.apollo.query<void, Identity>({

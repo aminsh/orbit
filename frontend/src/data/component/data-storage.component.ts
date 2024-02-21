@@ -12,7 +12,8 @@ import { finalize } from 'rxjs'
 import { ModalFactoryService } from '../../core/service/modal-factory/modal-factory.service'
 import { DataStorageEntryComponent } from './data-storage-entry.component'
 import { Identity } from '../../core/type'
-import { NotifyService } from '../../core/service/notify.service'
+import { OrbNotifyService } from '../../core/service/notify.service'
+import { OrbTranslateService } from '../../core/service/translate'
 
 @Component({
   templateUrl: './data-storage.component.html',
@@ -22,7 +23,8 @@ export class DataStorageComponent {
     private apollo: Apollo,
     private modalFactory: ModalFactoryService,
     private viewContainerRef: ViewContainerRef,
-    private notify: NotifyService,
+    private notify: OrbNotifyService,
+    private translate: OrbTranslateService,
   ) {
   }
 
@@ -79,8 +81,8 @@ export class DataStorageComponent {
 
   initialize(id: string) {
     this.modalFactory.confirm({
-      title: 'Initializing data storage',
-      content: 'Are you sure ?',
+      title: this.translate.get('initializing', 'data_storage'),
+      content: this.translate.get('are_you_sure'),
       handleOk: () => {
         this.initializing = true
 
@@ -93,8 +95,8 @@ export class DataStorageComponent {
           .pipe(finalize(() => this.synchronizing = false))
           .subscribe(() => {
             this.notify.success({
-              title: 'data_storage',
-              content: 'data_storage_initialized_success_message',
+              title: this.translate.get('data_storage'),
+              content: this.translate.get('data_storage_initialized_success_message'),
             })
             this.refresh()
           })
@@ -104,8 +106,8 @@ export class DataStorageComponent {
 
   synchronize(id: string) {
     this.modalFactory.confirm({
-      title: 'Synchronizing data storage',
-      content: 'Are you sure ?',
+      title: this.translate.get('synchronizing', 'data_storage'),
+      content: this.translate.get('are_your_sure'),
       handleOk: () => {
         this.synchronizing = true
 
@@ -118,8 +120,8 @@ export class DataStorageComponent {
           .pipe(finalize(() => this.synchronizing = false))
           .subscribe(() => {
             this.notify.success({
-              title: 'data_storage',
-              content: 'data_storage_synchronized_success_message',
+              title: this.translate.get('data_storage'),
+              content: this.translate.get('data_storage_synchronized_success_message'),
             })
           })
       },

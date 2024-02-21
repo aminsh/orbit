@@ -3,7 +3,6 @@ import { DataStorageComponent } from './component/data-storage.component'
 import { DataLayoutComponent } from './component/data-layout.component'
 import { RouterModule, RouterOutlet } from '@angular/router'
 import { routes } from './data.routes'
-import { TranslateModule } from '@ngx-translate/core'
 import { NzIconModule } from 'ng-zorro-antd/icon'
 import { NzButtonModule } from 'ng-zorro-antd/button'
 import { DataStorageEntryComponent } from './component/data-storage-entry.component'
@@ -25,12 +24,12 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip'
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { NzSpinModule } from 'ng-zorro-antd/spin'
 import { NzTagModule } from 'ng-zorro-antd/tag'
+import { TranslatePipe } from '../core/service/translate/translate.pipe'
 
 @NgModule({
   imports: [
     RouterModule.forChild(routes),
     RouterOutlet,
-    TranslateModule,
     NzIconModule,
     NzButtonModule,
     NzModalModule,
@@ -51,6 +50,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag'
     JsonPipe,
     NzSpinModule,
     NzTagModule,
+    TranslatePipe,
   ],
   providers: [],
   declarations: [
