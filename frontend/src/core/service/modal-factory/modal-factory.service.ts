@@ -1,7 +1,7 @@
-import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal'
-import {Injectable, Type} from '@angular/core'
-import {ModalComponentType, ModalConfirmParameter, ModalOptionsPlus} from './modal-factory.type'
-import {TranslateService} from '@ngx-translate/core'
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal'
+import { Injectable, Type } from '@angular/core'
+import { ModalComponentType, ModalConfirmParameter, ModalOptionsPlus } from './modal-factory.type'
+import { OrbTranslateService } from '../translate'
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core'
 export class ModalFactoryService {
   constructor(
     private nzModalService: NzModalService,
-    private translate: TranslateService,
+    private translate: OrbTranslateService,
   ) {
   }
 
@@ -52,7 +52,7 @@ export class ModalFactoryService {
         : value,
     })
     if (options?.nzTitle)
-      this.translate.get(options.nzTitle).subscribe(updateFunc)
+      this.translate.get(...options.nzTitle)
   }
 }
 

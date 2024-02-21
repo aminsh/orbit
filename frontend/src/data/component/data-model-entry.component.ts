@@ -1,10 +1,10 @@
-import {Component,inject,OnInit} from '@angular/core'
-import {Apollo, gql} from 'apollo-angular'
-import {NotifyService} from '../../core/service/notify.service'
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms'
-import {DataModelField, DataModel, DataModelDto, DataModelFieldType, DataStorage} from '../data.type'
-import {makeFormDirty} from '../../core/utils/form.utils'
-import {finalize} from 'rxjs'
+import { Component, inject, OnInit } from '@angular/core'
+import { Apollo, gql } from 'apollo-angular'
+import { OrbNotifyService } from '../../core/service/notify.service'
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { DataModel, DataModelDto, DataModelField, DataModelFieldType, DataStorage } from '../data.type'
+import { makeFormDirty } from '../../core/utils/form.utils'
+import { finalize } from 'rxjs'
 import {
   Identity,
   MutationCreateRequestParameters,
@@ -17,8 +17,8 @@ import {
   DATA_MODEL_UPDATE_REQUEST,
   GET_DATA_MODEL_BY_ID,
 } from '../graphql/data-model.graphql'
-import {ModalComponentType} from '../../core/service/modal-factory/modal-factory.type'
-import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal'
+import { ModalComponentType } from '../../core/service/modal-factory/modal-factory.type'
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal'
 
 @Component({
   selector: 'data-model-entry',
@@ -27,7 +27,7 @@ import {NZ_MODAL_DATA} from 'ng-zorro-antd/modal'
 export class DataModelEntryComponent implements OnInit, ModalComponentType {
   constructor(
     private apollo: Apollo,
-    private notify: NotifyService,
+    private notify: OrbNotifyService,
     private fb: FormBuilder,
   ) {
   }

@@ -1,4 +1,4 @@
-<button nz-button nzType="primary" routerLink="new">
+<button nz-button nzType="primary" (click)="showEntry()">
   <span nz-icon nzType="plus" nzTheme="outline"></span>
   {{ 'new'|translate }}
 </button>
@@ -14,9 +14,9 @@
 >
   <thead>
   <tr>
-    <th nzColumnKey="createdBy">Created by</th>
-    <th nzColumnKey="name">Name</th>
-    <th nzColumnKey="storage">Storage</th>
+    <th nzColumnKey="createdBy">{{'created_by'|translate}}</th>
+    <th nzColumnKey="name">{{'name'|translate}}</th>
+    <th nzColumnKey="storage">{{'storage'|translate}}</th>
     <th style="width: 30px"></th>
   </tr>
   </thead>
@@ -32,7 +32,7 @@
         nzShape="circle"
         nz-tooltip="{{'edit'|translate}}"
         nzTooltipPlacement="bottom"
-        [routerLink]="[it.id,'edit']">
+        (click)="showEntry(it.id)">
         <span nz-icon nzType="edit" nzTheme="outline"></span>
       </button>
 

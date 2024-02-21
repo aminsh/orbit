@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {Apollo} from 'apollo-angular'
-import {FormControl, FormGroup, Validators} from '@angular/forms'
-import {makeFormDirty} from '../../core/utils/form.utils'
-import {RegisterDTOVariable, RegisterResponse, USER_REGISTER_REQUEST} from '../graphql/register.graphql'
-import {Router} from '@angular/router'
-import {NotifyService} from '../../core/service/notify.service'
+import { Component } from "@angular/core";
+import { Apollo } from 'apollo-angular'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { makeFormDirty } from '../../core/utils/form.utils'
+import { RegisterDTOVariable, RegisterResponse, USER_REGISTER_REQUEST } from '../graphql/register.graphql'
+import { Router } from '@angular/router'
+import { OrbNotifyService } from '../../core/service/notify.service'
 
 @Component({
   templateUrl: './register.component.html',
@@ -14,7 +14,7 @@ export class RegisterComponent {
   constructor(
     private apollo: Apollo,
     private router: Router,
-    private notify: NotifyService,
+    private notify: OrbNotifyService,
   ) {
   }
 
