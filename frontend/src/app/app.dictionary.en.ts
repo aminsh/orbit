@@ -31,5 +31,8 @@ export default {
   field: 'Field',
   required: 'Required',
   label: 'Label',
+  'initialize': 'Initialize',
+  'synchronize': 'Synchronize',
   data_storage_initialized_success_message: 'Initialized successfully',
+  data_storage_synchronized_success_message: 'Synchronized successfully',
 }

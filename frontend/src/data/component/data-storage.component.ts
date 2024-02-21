@@ -3,7 +3,7 @@ import { Apollo } from 'apollo-angular'
 import { NzTableQueryParams } from 'ng-zorro-antd/table'
 import { DataStorage, StorageStatus } from '../data.type'
 import {
-  DATA_STORAGE_INITIALIZE_REQUEST,
+  DATA_STORAGE_SYNCHRONIZE_REQUEST,
   DataStorageQueryRequest,
   DataStorageResponse,
   GET_DATA_STORAGE,
@@ -26,7 +26,10 @@ export class DataStorageComponent {
   ) {
   }
 
+  protected readonly StorageStatus = StorageStatus
+
   initializing: boolean = false
+  synchronizing: boolean = false
   statusColor = {
     [StorageStatus.Pending]: '',
     [StorageStatus.Ready]: '#87d068',
@@ -75,19 +78,19 @@ export class DataStorageComponent {
   }
 
   initialize(id: string) {
-    this.initializing = true
-
     this.modalFactory.confirm({
       title: 'Initializing data storage',
       content: 'Are you sure ?',
       handleOk: () => {
+        this.initializing = true
+
         this.apollo.mutate<void, Identity>({
-          mutation: DATA_STORAGE_INITIALIZE_REQUEST,
+          mutation: DATA_STORAGE_SYNCHRONIZE_REQUEST,
           variables: {
             id,
           },
         })
-          .pipe(finalize(() => this.initializing = false))
+          .pipe(finalize(() => this.synchronizing = false))
           .subscribe(() => {
             this.notify.success({
               title: 'data_storage',
@@ -99,5 +102,27 @@ export class DataStorageComponent {
     })
   }
 
-  protected readonly StorageStatus = StorageStatus
+  synchronize(id: string) {
+    this.modalFactory.confirm({
+      title: 'Synchronizing data storage',
+      content: 'Are you sure ?',
+      handleOk: () => {
+        this.synchronizing = true
+
+        this.apollo.mutate<void, Identity>({
+          mutation: DATA_STORAGE_SYNCHRONIZE_REQUEST,
+          variables: {
+            id,
+          },
+        })
+          .pipe(finalize(() => this.synchronizing = false))
+          .subscribe(() => {
+            this.notify.success({
+              title: 'data_storage',
+              content: 'data_storage_synchronized_success_message',
+            })
+          })
+      },
+    })
+  }
 }

@@ -22,6 +22,12 @@ export const DATA_STORAGE_INITIALIZE_REQUEST = gql`
   }
 `
 
+export const DATA_STORAGE_SYNCHRONIZE_REQUEST = gql`
+  mutation dataStorageSynchronizeRequest($id: String!) {
+    dataStorageSynchronize(id: $id)
+  }
+`
+
 export const GET_DATA_STORAGE = gql`
   query getDataStorages($request: DataStoragePageableRequest!) {
     dataStoragesFind(request: $request) {
