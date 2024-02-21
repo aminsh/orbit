@@ -34,7 +34,7 @@ export class DataModelsComponent {
   showEntry(id?: string) {
     const params: Nullable<Identity> = id ? {id} : null
     this.modalService.create(DataModelEntryComponent, params, {
-      nzTitle: [id ? 'edit' : 'new', 'data_model'],
+      nzTitle: this.translate.get(id ? 'edit' : 'new', 'data_model'),
       nzViewContainerRef: this.viewContainerRef,
     })
       .afterClose
@@ -68,8 +68,8 @@ export class DataModelsComponent {
 
   remove(id: string) {
     this.modalService.confirm({
-      title: this.translate.get('Removing data model'),
-      content: 'Are you sure ?',
+      title: this.translate.get('removing', 'data_model'),
+      content: this.translate.get('are_you_sure'),
       handleOk: () => {
         this.apollo.query<void, Identity>({
           query: DATA_MODEL_REMOVE_REQUEST,
@@ -78,8 +78,8 @@ export class DataModelsComponent {
           }
         }).subscribe(() => {
           this.notify.success({
-            title: 'data_model',
-            content: 'remove_success_message',
+            title: this.translate.get('data_model'),
+            content: this.translate.get('remove_success_message'),
           })
           this.refresh()
         })

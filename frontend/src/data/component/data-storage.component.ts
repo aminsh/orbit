@@ -39,7 +39,7 @@ export class DataStorageComponent {
 
   create() {
     this.modalFactory.create(DataStorageEntryComponent, null, {
-      nzTitle: ['new', 'data_storage'],
+      nzTitle: this.translate.get('new', 'data_storage'),
       nzViewContainerRef: this.viewContainerRef,
     })
       .afterClose

@@ -20,6 +20,7 @@ export default {
   add: 'Add',
   edit: 'Edit',
   remove: 'Remove',
+  removing: 'Removing',
   loading: 'Loading',
   created_by: 'Created by',
   status: 'Status',
