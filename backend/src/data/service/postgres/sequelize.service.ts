@@ -29,6 +29,7 @@ export class SequelizeService {
       [DataModelFieldType.Integer]: DataTypes.INTEGER,
       [DataModelFieldType.Text]: DataTypes.STRING,
       [DataModelFieldType.Float]: DataTypes.FLOAT,
+      [DataModelFieldType.Boolean]: DataTypes.BOOLEAN,
     }
 
     for (const model of dataModels) {
