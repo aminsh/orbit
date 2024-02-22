@@ -25,6 +25,12 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { NzSpinModule } from 'ng-zorro-antd/spin'
 import { NzTagModule } from 'ng-zorro-antd/tag'
 import { TranslatePipe } from '../core/service/translate/translate.pipe'
+import { TextFieldComponent } from './component/dynamic-form/field-component/text-field.component'
+import { IntegerFieldComponent } from './component/dynamic-form/field-component/integer-field.component'
+import { FormHostDirective } from './component/dynamic-form/form-host.directive'
+import { FormContainerComponent } from './component/dynamic-form/form-container.component'
+import { DataModelFormEntryComponent } from './component/data-model-form-entry.component'
+import { BooleanFieldComponent } from './component/dynamic-form/field-component/boolean-field.component'
 
 @NgModule({
   imports: [
@@ -58,7 +64,14 @@ import { TranslatePipe } from '../core/service/translate/translate.pipe'
     DataStorageComponent,
     DataStorageEntryComponent,
     DataModelEntryComponent,
+
+    FormHostDirective,
+    FormContainerComponent,
     DataModelsComponent,
+    TextFieldComponent,
+    IntegerFieldComponent,
+    DataModelFormEntryComponent,
+    BooleanFieldComponent,
   ]
 })
 export class DataModule {}

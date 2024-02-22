@@ -1,4 +1,5 @@
-import {User} from '../user/user.type'
+import { User } from '../user/user.type'
+import { FormGroup } from '@angular/forms'
 
 export interface DataStorage {
   id: string,
@@ -45,7 +46,12 @@ export enum StorageStatus {
 
 export enum DataModelFieldType {
   Text = 'Text',
-  Integer = 'Text',
+  Integer = 'Integer',
   Float = 'Float',
   Boolean = 'Boolean',
+}
+
+export interface FieldComponent {
+  form: FormGroup
+  field: DataModelField
 }

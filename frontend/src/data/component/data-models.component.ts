@@ -9,6 +9,7 @@ import { ModalFactoryService } from '../../core/service/modal-factory/modal-fact
 import { DataModelEntryComponent } from './data-model-entry.component'
 import { OrbNotifyService } from '../../core/service/notify.service'
 import { OrbTranslateService } from '../../core/service/translate'
+import { DataModelFormEntryComponent } from './data-model-form-entry.component'
 
 @Component({
   templateUrl: './data-models.component.html',
@@ -85,6 +86,16 @@ export class DataModelsComponent {
         })
       },
     })
+  }
+
+  showFormEntry(id: string) {
+    this.modalService.create(
+      DataModelFormEntryComponent,
+      {modelId: id,},
+      {
+        nzTitle: this.translate.get('data_mode', 'entry', 'form'),
+        nzViewContainerRef: this.viewContainerRef,
+      })
   }
 }
 
