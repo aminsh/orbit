@@ -4,9 +4,11 @@ import { DataModelFieldType, FieldComponent } from '../../data.type'
 import { TextFieldComponent } from './field-component/text-field.component'
 import { IntegerFieldComponent } from './field-component/integer-field.component'
 import { BooleanFieldComponent } from './field-component/boolean-field.component'
+import {FloatFieldComponent} from './field-component/float-field.component'
 
 export const fieldMapper: Dictionary<Type<FieldComponent>> = {
   [DataModelFieldType.Text]: TextFieldComponent,
   [DataModelFieldType.Integer]: IntegerFieldComponent,
   [DataModelFieldType.Boolean]: BooleanFieldComponent,
+  [DataModelFieldType.Float]: FloatFieldComponent,
 }
