@@ -88,12 +88,12 @@ export class DataModelsComponent {
     })
   }
 
-  showFormEntry(id: string) {
+  showFormEntry(id: string, name: string) {
     this.modalService.create(
       DataModelFormEntryComponent,
       {modelId: id,},
       {
-        nzTitle: this.translate.get('data_mode', 'entry', 'form'),
+        nzTitle: this.translate.get('new', name),
         nzViewContainerRef: this.viewContainerRef,
       })
   }

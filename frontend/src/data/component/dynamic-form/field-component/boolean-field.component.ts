@@ -12,7 +12,6 @@ import { Component, Input } from '@angular/core'
   `
 })
 export class BooleanFieldComponent implements FieldComponent {
-  @Input() form!: FormGroup<any>;
-  @Input() field!: DataModelField;
-
+  @Input() form!: FormGroup
+  @Input() field!: DataModelField
 }
