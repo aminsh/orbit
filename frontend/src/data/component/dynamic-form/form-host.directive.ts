@@ -1,4 +1,5 @@
-import { Directive, Type, ViewContainerRef } from '@angular/core'
+import {ComponentRef, Directive, Type, ViewContainerRef} from '@angular/core'
+import {FieldComponent} from '../../data.type'
 
 @Directive({
   selector: '[formHost]'
@@ -6,9 +7,14 @@ import { Directive, Type, ViewContainerRef } from '@angular/core'
 export class FormHostDirective {
   constructor(
     public viewContainerRef: ViewContainerRef
-  ) {}
+  ) {
+  }
 
-  createMyComponent<HasProperty>(componentType: Type<HasProperty>) {
-    return this.viewContainerRef.createComponent(componentType);
+  public components: ComponentRef<FieldComponent>[] = []
+
+  createComponent<ComponentType extends FieldComponent>(componentType: Type<ComponentType>) {
+    const component = this.viewContainerRef.createComponent<ComponentType>(componentType)
+    this.components.push(component)
+    return component
   }
 }

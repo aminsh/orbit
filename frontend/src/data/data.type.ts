@@ -1,5 +1,6 @@
 import { User } from '../user/user.type'
 import { FormGroup } from '@angular/forms'
+import {TemplateRef} from '@angular/core'
 
 export interface DataStorage {
   id: string,
@@ -54,4 +55,5 @@ export enum DataModelFieldType {
 export interface FieldComponent {
   form: FormGroup
   field: DataModelField
+  errorTemplate?: TemplateRef<any>
 }
