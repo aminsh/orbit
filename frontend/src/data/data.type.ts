@@ -1,6 +1,6 @@
 import { User } from '../user/user.type'
 import { FormGroup } from '@angular/forms'
-import {TemplateRef} from '@angular/core'
+import { TemplateRef } from '@angular/core'
 
 export interface DataStorage {
   id: string,
@@ -52,8 +52,12 @@ export enum DataModelFieldType {
   Boolean = 'Boolean',
 }
 
-export interface FieldComponent {
+export interface EditorComponent {
   form: FormGroup
   field: DataModelField
   errorTemplate?: TemplateRef<any>
+}
+
+export interface TableCellComponent {
+  value: any
 }

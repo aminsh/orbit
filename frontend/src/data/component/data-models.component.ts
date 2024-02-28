@@ -5,18 +5,17 @@ import { DataModel } from '../data.type'
 import { finalize } from 'rxjs'
 import { Identity, Nullable, QueryPageableRequest, QueryPageableResponse } from '../../core/type'
 import { DATA_MODEL_REMOVE_REQUEST, GET_DATA_MODELS } from '../graphql/data-model.graphql'
-import { ModalFactoryService } from '../../core/service/modal-factory/modal-factory.service'
 import { DataModelEntryComponent } from './data-model-entry.component'
 import { OrbNotifyService } from '../../core/service/notify.service'
 import { OrbTranslateService } from '../../core/service/translate'
-import { DataModelFormEntryComponent } from './data-model-form-entry.component'
+import { OrbModalService } from '../../core/service/orb-modal.service'
 
 @Component({
   templateUrl: './data-models.component.html',
 })
 export class DataModelsComponent {
   constructor(
-    private modalService: ModalFactoryService,
+    private modalService: OrbModalService,
     private viewContainerRef: ViewContainerRef,
     private apollo: Apollo,
     private notify: OrbNotifyService,
@@ -34,12 +33,20 @@ export class DataModelsComponent {
 
   showEntry(id?: string) {
     const params: Nullable<Identity> = id ? {id} : null
-    this.modalService.create(DataModelEntryComponent, params, {
+    this.modalService.create({
       nzTitle: this.translate.get(id ? 'edit' : 'new', 'data_model'),
       nzViewContainerRef: this.viewContainerRef,
+      nzContent: DataModelEntryComponent,
+      nzData: params,
+      nzOnOk: async instance => {
+        await instance.save()
+        this.notify.success({
+          title: 'data_model',
+          content: id ? 'update_success_message' : 'create_success_message',
+        })
+        this.refresh()
+      },
     })
-      .afterClose
-      .subscribe(() => this.refresh())
   }
 
   fetch(params: NzTableQueryParams) {
@@ -69,9 +76,10 @@ export class DataModelsComponent {
 
   remove(id: string) {
     this.modalService.confirm({
-      title: this.translate.get('removing', 'data_model'),
-      content: this.translate.get('are_you_sure'),
-      handleOk: () => {
+      nzTitle: this.translate.get('removing', 'data_model'),
+      nzViewContainerRef: this.viewContainerRef,
+      nzContent: this.translate.get('are_you_sure'),
+      nzOnOk: () => {
         this.apollo.query<void, Identity>({
           query: DATA_MODEL_REMOVE_REQUEST,
           variables: {
@@ -89,13 +97,7 @@ export class DataModelsComponent {
   }
 
   showFormEntry(id: string, name: string) {
-    this.modalService.create(
-      DataModelFormEntryComponent,
-      {modelId: id,},
-      {
-        nzTitle: this.translate.get('new', name),
-        nzViewContainerRef: this.viewContainerRef,
-      })
+
   }
 }
 

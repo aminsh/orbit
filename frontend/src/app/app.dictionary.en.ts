@@ -2,6 +2,7 @@ export default {
   create_success_message: 'Created successfully',
   update_success_message: 'Updated successfully',
   remove_success_message: 'Removed successfully',
+  done_successfully: 'Done successfully',
   required_error_message: 'This field is required',
   email_validation_error_message: 'The email is invalid',
   login_error_message: 'The email or password is incorrect',
@@ -39,4 +40,5 @@ export default {
   synchronizing: 'Synchronizing',
   data_storage_initialized_success_message: 'Initialized successfully',
   data_storage_synchronized_success_message: 'Synchronized successfully',
+  list: 'List',
 }

@@ -14,6 +14,7 @@ import { DataStorageEntryComponent } from './data-storage-entry.component'
 import { Identity } from '../../core/type'
 import { OrbNotifyService } from '../../core/service/notify.service'
 import { OrbTranslateService } from '../../core/service/translate'
+import { NzModalService } from 'ng-zorro-antd/modal'
 
 @Component({
   templateUrl: './data-storage.component.html',
@@ -25,6 +26,7 @@ export class DataStorageComponent {
     private viewContainerRef: ViewContainerRef,
     private notify: OrbNotifyService,
     private translate: OrbTranslateService,
+    private modalService: NzModalService,
   ) {
   }
 
@@ -35,15 +37,6 @@ export class DataStorageComponent {
   statusColor = {
     [StorageStatus.Pending]: '',
     [StorageStatus.Ready]: '#87d068',
-  }
-
-  create() {
-    this.modalFactory.create(DataStorageEntryComponent, null, {
-      nzTitle: this.translate.get('new', 'data_storage'),
-      nzViewContainerRef: this.viewContainerRef,
-    })
-      .afterClose
-      .subscribe(() => this.refresh())
   }
 
   tableOptions = {
@@ -73,6 +66,34 @@ export class DataStorageComponent {
           this.tableOptions.data = result.data?.dataStoragesFind.data
         },
       )
+  }
+
+  create() {
+    const modal: any = this.modalService.create({
+      nzTitle: this.translate.get('new', 'data_storage'),
+      nzContent: DataStorageEntryComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzClosable: false,
+      nzMaskClosable: false,
+      nzOnOk: async instance => {
+        await instance.save()
+        this.notify.success({
+          title: this.translate.get('data_storage'),
+          content: this.translate.get('done_successfully'),
+        })
+        this.refresh()
+      }
+    })
+
+    /*modal.afterClose.subscribe((result: string) => {
+      console.log(result)
+      this.refresh()
+
+      this.notify.success({
+        title: this.translate.get('data_storage'),
+        content: this.translate.get('done_successfully'),
+      })
+    })*/
   }
 
   refresh() {

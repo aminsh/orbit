@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core'
 import { Apollo, gql } from 'apollo-angular'
-import { OrbNotifyService } from '../../core/service/notify.service'
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { DataModel, DataModelDto, DataModelField, DataModelFieldType, DataStorage } from '../data.type'
 import { makeFormDirty } from '../../core/utils/form.utils'
@@ -17,17 +16,15 @@ import {
   DATA_MODEL_UPDATE_REQUEST,
   GET_DATA_MODEL_BY_ID,
 } from '../graphql/data-model.graphql'
-import { ModalComponentType } from '../../core/service/modal-factory/modal-factory.type'
 import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal'
 
 @Component({
   selector: 'data-model-entry',
   templateUrl: './data-model-entry.component.html',
 })
-export class DataModelEntryComponent implements OnInit, ModalComponentType {
+export class DataModelEntryComponent implements OnInit {
   constructor(
     private apollo: Apollo,
-    private notify: OrbNotifyService,
     private fb: FormBuilder,
   ) {
   }
@@ -123,45 +120,43 @@ export class DataModelEntryComponent implements OnInit, ModalComponentType {
     return false
   }
 
-  submit() {
-    if (!this.canOK)
-      return
+  save(): Promise<void> {
+    return new Promise((resolve, reject)=> {
+      if (!this.canOK)
+        return reject()
 
-    this.message = ''
-    this.isSaving = true
+      this.message = ''
+      this.isSaving = true
 
-    const id = this.data ? this.data.id : null
+      const id = this.data ? this.data.id : null
 
-    const request$ = id
-      ? this.apollo.mutate<any, MutationUpdateRequestParameters<DataModelDto>>({
-        mutation: DATA_MODEL_UPDATE_REQUEST,
-        variables: {
-          id,
-          dto: this.form.getRawValue() as DataModelDto,
-        },
-      })
-      : this.apollo.mutate<any, MutationCreateRequestParameters<DataModelDto>>({
-        mutation: DATA_MODEL_CREATE_REQUEST,
-        variables: {
-          dto: this.form.getRawValue() as DataModelDto,
-        },
-      })
+      const request$ = id
+        ? this.apollo.mutate<any, MutationUpdateRequestParameters<DataModelDto>>({
+          mutation: DATA_MODEL_UPDATE_REQUEST,
+          variables: {
+            id,
+            dto: this.form.getRawValue() as DataModelDto,
+          },
+        })
+        : this.apollo.mutate<any, MutationCreateRequestParameters<DataModelDto>>({
+          mutation: DATA_MODEL_CREATE_REQUEST,
+          variables: {
+            dto: this.form.getRawValue() as DataModelDto,
+          },
+        })
 
-    request$
-      .pipe(
-        finalize(() => this.isSaving = false),
-      )
-      .subscribe(
-        () => {
-          this.notify.success({
-            title: 'data_model',
-            content: id ? 'update_success_message' : 'create_success_message',
-          })
-        },
-        error => {
-          this.message = error.message
-        },
-      )
+      request$
+        .pipe(
+          finalize(() => this.isSaving = false),
+        )
+        .subscribe(
+          () =>  resolve(),
+          error => {
+            this.message = error.message
+            reject()
+          },
+        )
+    })
   }
 
   storageQueryHandler(search: string) {

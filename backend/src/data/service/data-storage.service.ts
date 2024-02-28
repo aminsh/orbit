@@ -1,12 +1,12 @@
-import {Identity} from '../../shared/type'
-import {DataStorageDto} from '../dto/data-storage.dto'
-import {DataStorageRepository} from '../repository/data-storage-repository'
-import {DataStorage} from '../schema/data-storage'
-import {Inject, Injectable, NotFoundException, Scope} from '@nestjs/common'
-import {RequestContext} from '../../shared/service/request-context'
-import {User} from '../../user/shema/user'
-import {StorageStatus} from '../schema/enums'
-import {DATABASE_CONFIGURATION_FACTORY, DatabaseConfigurationFactory} from './database-configurations.service'
+import { Identity } from '../../shared/type'
+import { DataStorageDto } from '../dto/data-storage.dto'
+import { DataStorageRepository } from '../repository/data-storage-repository'
+import { DataStorage } from '../schema/data-storage'
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common'
+import { RequestContext } from '../../shared/service/request-context'
+import { User } from '../../user/shema/user'
+import { StorageStatus } from '../schema/enums'
+import { DATABASE_CONFIGURATION_FACTORY, DatabaseConfigurationFactory } from './database-configurations.service'
 
 @Injectable({ scope: Scope.REQUEST })
 export class DataStorageService {

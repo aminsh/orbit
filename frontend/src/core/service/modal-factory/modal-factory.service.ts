@@ -31,6 +31,7 @@ export class ModalFactoryService {
     return modal
   }
 
+
   confirm(params: ModalConfirmParameter) {
     this.nzModalService.confirm({
       nzTitle: params.title,

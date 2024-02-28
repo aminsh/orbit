@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { FormGroup } from '@angular/forms'
-import { DataModelField, FieldComponent } from '../../../data.type'
+import { DataModelField, EditorComponent } from '../../../../data/data.type'
 
 @Component({
   template: `
@@ -14,7 +14,7 @@ import { DataModelField, FieldComponent } from '../../../data.type'
     </form>
   `,
 })
-export class IntegerFieldComponent implements FieldComponent {
+export class IntegerFieldComponent implements EditorComponent {
   @Input() form!: FormGroup
   @Input() field!: DataModelField
 }

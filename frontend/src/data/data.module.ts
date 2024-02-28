@@ -25,14 +25,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox'
 import { NzSpinModule } from 'ng-zorro-antd/spin'
 import { NzTagModule } from 'ng-zorro-antd/tag'
 import { TranslatePipe } from '../core/service/translate/translate.pipe'
-import { TextFieldComponent } from './component/dynamic-form/field-component/text-field.component'
-import { IntegerFieldComponent } from './component/dynamic-form/field-component/integer-field.component'
-import { FormHostDirective } from './component/dynamic-form/form-host.directive'
-import { FormContainerComponent } from './component/dynamic-form/form-container.component'
-import { DataModelFormEntryComponent } from './component/data-model-form-entry.component'
-import { BooleanFieldComponent } from './component/dynamic-form/field-component/boolean-field.component'
-import {FloatFieldComponent} from './component/dynamic-form/field-component/float-field.component'
-import {FieldErrorDisplayComponent} from './component/dynamic-form/field-error-display.component'
+import { DataModalService } from './service/data-modal.service'
 
 @NgModule({
   imports: [
@@ -60,22 +53,18 @@ import {FieldErrorDisplayComponent} from './component/dynamic-form/field-error-d
     NzTagModule,
     TranslatePipe,
   ],
-  providers: [],
+  providers: [
+    DataModalService,
+  ],
   declarations: [
     DataLayoutComponent,
     DataStorageComponent,
     DataStorageEntryComponent,
-    DataModelEntryComponent,
-
-    FormHostDirective,
-    FormContainerComponent,
-    FieldErrorDisplayComponent,
     DataModelsComponent,
-    TextFieldComponent,
-    IntegerFieldComponent,
-    DataModelFormEntryComponent,
-    BooleanFieldComponent,
-    FloatFieldComponent,
+    DataModelEntryComponent,
+  ],
+  exports: [
+
   ]
 })
 export class DataModule {}

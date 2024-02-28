@@ -8,6 +8,7 @@ import { finalize } from 'rxjs'
 import { ModalComponentType } from '../../core/service/modal-factory/modal-factory.type'
 import { OrbNotifyService } from '../../core/service/notify.service'
 import { OrbTranslateService } from '../../core/service/translate'
+import { NzModalRef } from 'ng-zorro-antd/modal'
 
 @Component({
   selector: 'data-storage-entry',
@@ -18,11 +19,12 @@ export class DataStorageEntryComponent implements ModalComponentType {
     private apollo: Apollo,
     private notify: OrbNotifyService,
     private translate: OrbTranslateService,
+    private nzModalRef: NzModalRef,
   ) {
   }
 
   get canOK(): boolean {
-    if(this.form.valid)
+    if (this.form.valid)
       return true
 
     makeFormDirty(this.form)
@@ -51,34 +53,37 @@ export class DataStorageEntryComponent implements ModalComponentType {
     this.isOpenChange.emit(false)
   }
 
-  save() {
-    if(!this.canOK)
-      return
+  validate(): boolean {
+    if (this.form.valid)
+      return true
+    makeFormDirty(this.form)
+    return false
+  }
 
-    this.message = ''
-    this.isSaving = true
+  save(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!this.validate())
+        return reject()
 
-    this.apollo.mutate<any, DataStorageCreateVariable>({
-      mutation: DATA_STORAGE_CREATE_REQUEST,
-      variables: {
-        dto: this.form.getRawValue() as DataStorageCreateVariable['dto'],
-      },
+      this.message = ''
+      this.isSaving = true
+
+      this.apollo.mutate<any, DataStorageCreateVariable>({
+        mutation: DATA_STORAGE_CREATE_REQUEST,
+        variables: {
+          dto: this.form.getRawValue() as DataStorageCreateVariable['dto'],
+        },
+      })
+        .pipe(
+          finalize(() => this.isSaving = false),
+        )
+        .subscribe(
+          () => resolve(),
+          error => {
+            this.message = error.message
+            reject()
+          },
+        )
     })
-      .pipe(
-        finalize(() => this.isSaving = false),
-      )
-      .subscribe(
-        () => {
-          this.notify.success({
-            title: this.translate.get('data_storage'),
-            content: this.translate.get('create_message_successfully'),
-          })
-          this.close()
-          this.complete.emit()
-        },
-        error => {
-          this.message = error.message
-        },
-      )
   }
 }
