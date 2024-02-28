@@ -1,6 +1,6 @@
-import {Component, EmbeddedViewRef, Injector, Input, TemplateRef} from '@angular/core'
-import {AbstractControl, FormControl, FormGroup} from '@angular/forms'
-import { DataModelField, FieldComponent } from '../../../data.type'
+import { Component, Input, TemplateRef } from '@angular/core'
+import { FormGroup } from '@angular/forms'
+import { DataModelField, EditorComponent } from '../../../../data/data.type'
 
 @Component({
   template: `
@@ -16,7 +16,7 @@ import { DataModelField, FieldComponent } from '../../../data.type'
     </form>
   `,
 })
-export class TextFieldComponent implements FieldComponent {
+export class TextFieldComponent implements EditorComponent {
   @Input() form!: FormGroup
   @Input() field!: DataModelField
   @Input() errorTemplate!: TemplateRef<any>

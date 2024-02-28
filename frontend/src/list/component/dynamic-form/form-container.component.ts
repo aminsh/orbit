@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core'
-import {FormHostDirective} from './form-host.directive'
-import {DataModel, FieldComponent} from '../../data.type'
-import {FormBuilder, FormGroup, Validators} from '@angular/forms'
+import { AfterViewInit, Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core'
+import { FormHostDirective } from './form-host.directive'
+import { DataModel, EditorComponent } from '../../../data/data.type'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import Enumerable from 'linq'
-import {fieldMapper} from './field-mapper'
+import { fieldComponentMapper } from './field-component-mapper'
 
 @Component({
   selector: 'form-container',
@@ -44,12 +44,12 @@ export class FormContainerComponent implements OnInit, AfterViewInit {
     this.form = this.fb.group(formControls)
 
     this.dataModel.fields.forEach(field => {
-      const componentType = fieldMapper[field.type]
+      const componentType = fieldComponentMapper[field.type]
 
       if (!componentType)
         return
 
-      const component = this.formHost.createComponent<FieldComponent>(componentType)
+      const component = this.formHost.createComponent<EditorComponent>(componentType.editor)
       component.instance.form = this.form
       component.instance.field = field
     })
@@ -57,5 +57,13 @@ export class FormContainerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.formHost.components.forEach(cp => cp.instance.errorTemplate = this.errorTemplate)
+  }
+
+  setValue(data: any) {
+    const value: any = {}
+    this.dataModel.fields.forEach(field => {
+      value[field.name] = data[field.name]
+    })
+    this.form.setValue(value)
   }
 }

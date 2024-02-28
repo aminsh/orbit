@@ -1,5 +1,5 @@
-import {ComponentRef, Directive, Type, ViewContainerRef} from '@angular/core'
-import {FieldComponent} from '../../data.type'
+import { ComponentRef, Directive, Type, ViewContainerRef } from '@angular/core'
+import { EditorComponent } from '../../../data/data.type'
 
 @Directive({
   selector: '[formHost]'
@@ -10,9 +10,9 @@ export class FormHostDirective {
   ) {
   }
 
-  public components: ComponentRef<FieldComponent>[] = []
+  public components: ComponentRef<EditorComponent>[] = []
 
-  createComponent<ComponentType extends FieldComponent>(componentType: Type<ComponentType>) {
+  createComponent<ComponentType extends EditorComponent>(componentType: Type<ComponentType>) {
     const component = this.viewContainerRef.createComponent<ComponentType>(componentType)
     this.components.push(component)
     return component

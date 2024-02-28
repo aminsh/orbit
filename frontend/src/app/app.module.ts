@@ -20,6 +20,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography'
 import { DataModule } from '../data/data.module'
 import { DEFAULT_TRANSLATE_DICTIONARY } from '../core/service/translate'
 import { TranslatePipe } from '../core/service/translate/translate.pipe'
+import { ListModule } from '../list/list.module'
 
 registerLocaleData(en)
 
@@ -40,6 +41,7 @@ registerLocaleData(en)
     UserModule,
     DataModule,
     TranslatePipe,
+    ListModule,
   ],
   providers: [
     {

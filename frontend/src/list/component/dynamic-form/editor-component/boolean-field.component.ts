@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { DataModelField, FieldComponent } from '../../../data.type'
+import { DataModelField, EditorComponent } from '../../../../data/data.type'
 import { Component, Input } from '@angular/core'
 
 @Component({
@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core'
     </form>
   `
 })
-export class BooleanFieldComponent implements FieldComponent {
+export class BooleanFieldComponent implements EditorComponent {
   @Input() form!: FormGroup
   @Input() field!: DataModelField
 }
