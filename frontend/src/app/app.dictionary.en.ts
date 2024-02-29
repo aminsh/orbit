@@ -17,6 +17,8 @@ export default {
   or: 'Or',
   registration: 'Registration',
   registration_success_message: 'Your registration has been successfully done, Please login',
+  yes: 'Yes',
+  no: 'No',
   new: 'New',
   add: 'Add',
   edit: 'Edit',

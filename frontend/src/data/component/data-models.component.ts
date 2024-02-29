@@ -95,9 +95,5 @@ export class DataModelsComponent {
       },
     })
   }
-
-  showFormEntry(id: string, name: string) {
-
-  }
 }
 
