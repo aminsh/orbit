@@ -14,6 +14,12 @@ export const LIST_UPDATE_REQUEST = gql`
   }
 `
 
+export const LIST_DELETE_REQUEST = gql`
+  mutation DataModelDeleteRequest($id: String!, $where: JSON!) {
+    dataModelQueryDelete(id: $id, where: $where)
+  }
+`
+
 export const LIST_QUERY = gql`
   query GetListItems($id: String!, $query: JSON!) {
     dataModelQueryFind(id: $id, query: $query) {

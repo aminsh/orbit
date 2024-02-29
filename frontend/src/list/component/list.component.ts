@@ -6,7 +6,7 @@ import { DataModel } from '../../data/data.type'
 import { Identity, QueryPageableResponse, TableOptions } from '../../core/type'
 import { NzTableQueryParams } from 'ng-zorro-antd/table'
 import { finalize, Subscription } from 'rxjs'
-import { LIST_QUERY } from '../graphql/list.graphql'
+import { LIST_DELETE_REQUEST, LIST_QUERY } from '../graphql/list.graphql'
 import { OrbModalService } from '../../core/service/orb-modal.service'
 import { ListEntryComponent } from './list-entry.component'
 import { OrbTranslateService } from '../../core/service/translate'
@@ -76,8 +76,8 @@ export class ListComponent implements OnInit, OnDestroy {
           offset: (params.pageIndex - 1) * params.pageSize,
           limit: params.pageSize,
           order: [
-            ['id', 'DESC']
-          ]
+            ['id', 'DESC'],
+          ],
         },
       },
     })
@@ -93,6 +93,31 @@ export class ListComponent implements OnInit, OnDestroy {
 
   refresh() {
     this.fetch({pageSize: this.tableOptions.pageSize, pageIndex: 1} as NzTableQueryParams)
+  }
+
+  delete(id: number) {
+    this.modalService.confirm({
+      nzTitle: this.translate.get('removing', this.dataModel.name),
+      nzViewContainerRef: this.viewContainerRef,
+      nzContent: this.translate.get('are_you_sure'),
+      nzOnOk: () => {
+        this.apollo.query<void, Identity & { where: any }>({
+          query: LIST_DELETE_REQUEST,
+          variables: {
+            id: this.dataModel.id,
+            where: {
+              id,
+            },
+          },
+        }).subscribe(() => {
+          this.notify.success({
+            title: this.dataModel.name,
+            content: this.translate.get('remove_success_message'),
+          })
+          this.refresh()
+        })
+      },
+    })
   }
 
   private init(modelId: string) {
