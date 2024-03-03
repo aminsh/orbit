@@ -11,7 +11,7 @@ import { DataStorageResolver } from './service/data-storage.resolver'
 import {
   DATABASE_CONFIGURATION_FACTORY,
   DatabaseConfigurationFactory,
-  DatabaseConfigurationsService
+  DatabaseConfigurationsService,
 } from './service/database-configurations.service'
 import { StorageType } from './schema/enums'
 import { PostgresConfigurationService } from './service/postgres/postgres-configuration.service'
@@ -66,6 +66,9 @@ import { DataModelQueryResolver } from './service/data-model-query.resolver'
       },
       inject: [ PostgresQueryService ],
     },
+  ],
+  exports: [
+    DataModelRepository,
   ]
 })
 export class DataModule {
