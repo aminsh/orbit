@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from '../../shared/type';
-import { DataModel } from '../schema/data-model';
-import { FilterQuery, Model, ProjectionType, QueryOptions } from 'mongoose';
-import { InjectModel } from '@nestjs/mongoose';
+import { Injectable } from '@nestjs/common'
+import { Repository } from '../../shared/type'
+import { DataModel } from '../schema/data-model'
+import { FilterQuery, Model, ProjectionType, QueryOptions } from 'mongoose'
+import { InjectModel } from '@nestjs/mongoose'
 
 @Injectable()
 export class DataModelRepository implements Repository<DataModel> {
