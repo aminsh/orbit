@@ -5,10 +5,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { UserModule } from './user/user.module'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { VoidResolver, GraphQLJSON } from 'graphql-scalars'
+import { GraphQLJSON, VoidResolver } from 'graphql-scalars'
 import { SharedModule } from './shared/shared.module'
-import { DataModule } from './data/data.module';
+import { DataModule } from './data/data.module'
 import { EventEmitterModule } from '@nestjs/event-emitter'
+import { ApiModule } from './api/api.module'
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter'
     SharedModule,
     UserModule,
     DataModule,
+    ApiModule,
   ],
   controllers: [],
   providers: [],

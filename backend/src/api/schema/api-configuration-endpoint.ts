@@ -4,10 +4,10 @@ import { ApiType } from '../api.enums'
 
 @Schema({_id: false})
 export class ApiConfigurationEndpoint {
-  @Prop({type: Object.values(HttpMethod)})
+  @Prop({type: String, enum: Object.values(HttpMethod)})
   httpMethod: HttpMethod
 
-  @Prop({type: Object.values(ApiType)})
+  @Prop({type: String, enum: Object.values(ApiType)})
   type: ApiType
 }
 

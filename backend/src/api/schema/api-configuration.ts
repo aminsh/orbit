@@ -16,7 +16,7 @@ export class ApiConfiguration extends Entity {
   @Prop()
   prefix: string
 
-  @Prop({type: ApiConfigurationEndpointSchema})
+  @Prop([{type: ApiConfigurationEndpointSchema}])
   endpoints: ApiConfigurationEndpoint[]
 }
 

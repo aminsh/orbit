@@ -1,5 +1,5 @@
 export enum ApiType {
-  GetOne= 'GetOne',
+  GetOne = 'GetOne',
   GetAll = 'GetAll',
   Create = 'Create',
   Update = 'Update',
