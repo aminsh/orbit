@@ -1,5 +1,6 @@
 import { join } from 'path'
-import { Module } from '@nestjs/common'
+import { redisStore } from 'cache-manager-redis-store'
+import { CacheModule, CacheModuleAsyncOptions, Module } from '@nestjs/common'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { UserModule } from './user/user.module'
@@ -28,6 +29,21 @@ import { ApiModule } from './api/api.module'
       }
     }),
     EventEmitterModule.forRoot(),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async (configService: ConfigService) => {
+        const store = await redisStore({
+          socket: {
+            host: configService.get('REDIS_HOST'),
+            port: Number(configService.get('REDIS_PORT')),
+          },
+        })
+        return {
+          store: () => store,
+        }
+      },
+      inject: [ConfigService],
+    } as CacheModuleAsyncOptions),
     SharedModule,
     UserModule,
     DataModule,
@@ -38,3 +54,5 @@ import { ApiModule } from './api/api.module'
 })
 export class AppModule {
 }
+
+
