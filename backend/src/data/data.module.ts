@@ -69,6 +69,7 @@ import { DataModelQueryResolver } from './service/data-model-query.resolver'
   ],
   exports: [
     DataModelRepository,
+    DataModelQueryService,
   ]
 })
 export class DataModule {
