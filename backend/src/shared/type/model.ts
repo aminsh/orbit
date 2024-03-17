@@ -1,6 +1,6 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
 import { IsNumber } from 'class-validator';
-import { FilterQuery, ProjectionType } from 'mongoose'
+import { FilterQuery, ProjectionType, QueryOptions } from 'mongoose'
 
 export interface Identity {
   id: string;
@@ -40,9 +40,17 @@ export class Entity {
 }
 
 export interface Repository<TEntity> {
-  findOne(filter: FilterQuery<TEntity>, projection?: ProjectionType<TEntity>): Promise<TEntity>;
+  findOne(
+    filter: FilterQuery<TEntity>,
+    projection?: ProjectionType<TEntity>,
+    options?: QueryOptions<TEntity>
+  ): Promise<TEntity>;
 
-  find(filter: FilterQuery<TEntity>, projection?: ProjectionType<TEntity>): Promise<TEntity[]>;
+  find(
+    filter: FilterQuery<TEntity>,
+    projection?: ProjectionType<TEntity>,
+    options?: QueryOptions<TEntity>
+  ): Promise<TEntity[]>;
 
   create(entity: TEntity): Promise<TEntity>;
 
