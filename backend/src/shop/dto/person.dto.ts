@@ -1,14 +1,16 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { IsBoolean } from 'class-validator'
+import {Field, ObjectType} from '@nestjs/graphql'
+import {IsBoolean, IsOptional} from 'class-validator'
 
 @ObjectType()
 export class PersonDto {
-  @Field(() => Boolean)
+  @Field(() => Boolean, {nullable: true})
   @IsBoolean()
+  @IsOptional()
   isCustomer: boolean
 
-  @Field(() => Boolean)
+  @Field(() => Boolean, {nullable: true})
   @IsBoolean()
+  @IsOptional()
   isSupplier: boolean
 
   @Field(() => String)

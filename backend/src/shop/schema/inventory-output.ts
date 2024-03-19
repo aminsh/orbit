@@ -1,5 +1,4 @@
 import { Entity } from '../../shared/type'
-import { InventoryType } from './enums'
 import { Person } from './person'
 import { InventoryLine, InventoryLineSchema } from './inventory-line'
 import { User } from '../../user/shema/user'
@@ -16,9 +15,6 @@ export class InventoryOutput extends Entity {
 
   @Prop()
   date: Date
-
-  @Prop({enum: Object.values(InventoryType)})
-  type: InventoryType
 
   @Prop({type: mongoose.Schema.Types.ObjectId, ref: Person.name})
   supplier: Person
