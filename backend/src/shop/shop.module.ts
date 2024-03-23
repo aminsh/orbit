@@ -21,11 +21,8 @@ import {InventoryInputResolver} from './resolver/inventory-input.resolver'
 import {InventoryOutputResolver} from './resolver/inventory-output.resolver'
 import {OrderResolver} from './resolver/order.resolver'
 import {ViewConfigService} from './service/view-config.service'
-import {ProductView} from './dto/product.view'
-import {ElasticsearchModule} from '@nestjs/elasticsearch'
-import {ConfigService} from '@nestjs/config'
 import {ProductListenerService} from './service/product-listener.service'
-import {ProductViewAssembler} from './view-assembler/product-view.assembler'
+import {ProductViewAssemblerService} from './read/product-view-assembler.service'
 
 @Module({
   imports: [
@@ -36,12 +33,6 @@ import {ProductViewAssembler} from './view-assembler/product-view.assembler'
       {name: InventoryInput.name, schema: InventoryInputSchema},
       {name: InventoryOutput.name, schema: InventoryOutputSchema},
     ]),
-    ElasticsearchModule.registerAsync({
-      useFactory: (configService: ConfigService) => ({
-        node: configService.get('ELASTIC_URL'),
-      }),
-      inject: [ConfigService],
-    }),
   ],
   providers: [
     PersonRepository,
@@ -50,7 +41,7 @@ import {ProductViewAssembler} from './view-assembler/product-view.assembler'
     ProductRepository,
     ProductService,
     ProductResolver,
-    ProductViewAssembler,
+    ProductViewAssemblerService,
     ProductListenerService,
     InventoryInputRepository,
     InventoryInputService,

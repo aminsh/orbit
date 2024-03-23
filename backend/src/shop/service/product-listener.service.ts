@@ -1,16 +1,15 @@
 import {Injectable} from '@nestjs/common'
-import {ProductRepository} from '../repository/product.repository'
 import {OnEvent} from '@nestjs/event-emitter'
 import {SHOP_EVENT} from '../shop.contants'
 import {SearchService} from '../../shared/service/search.service'
 import {ProductView} from '../dto/product.view'
 import {Identity} from '../../shared/type'
-import {ProductViewAssembler} from '../view-assembler/product-view.assembler'
+import {ProductViewAssemblerService} from '../read/product-view-assembler.service'
 
 @Injectable()
 export class ProductListenerService {
   constructor(
-    private productViewAssembler: ProductViewAssembler,
+    private productViewAssembler: ProductViewAssemblerService,
     private search: SearchService,
   ) {
   }

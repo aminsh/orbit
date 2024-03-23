@@ -10,6 +10,7 @@ import {SHOP_EVENT, SHOP_MESSAGE} from '../shop.contants'
 import {InventoryLineDto} from '../dto/inventory-line.dto'
 import {ProductRepository} from '../repository/product.repository'
 import {EventEmitter2} from '@nestjs/event-emitter'
+import Enumerable from 'linq'
 
 @Injectable({scope: Scope.REQUEST})
 export class InventoryInputService {
@@ -49,14 +50,37 @@ export class InventoryInputService {
 
   async update(id: string, dto: InventoryInputDto): Promise<void> {
     const entity = await this.fetchOrThrow(id)
+
+    const originalProducts = entity.lines.map(ln => ln.product._id)
+
     await this.resolveSupplier(entity, dto.supplierId)
     await this.resolveLines(entity, dto.lines)
+
     await this.inventoryInputRepository.update(entity)
+
+    const productsChanged = Enumerable.from([
+      ...originalProducts,
+      ...entity.lines.map(ln => ln.product._id)
+    ])
+      .distinct()
+      .toArray()
+
+
+    productsChanged.forEach(id =>
+      this.eventEmitter.emit(SHOP_EVENT.PRODUCT_INVENTORY_CHANGED, {id})
+    )
   }
 
   async remove(id: string): Promise<void> {
     const entity = await this.fetchOrThrow(id)
+
     await this.inventoryInputRepository.remove(entity)
+
+    const productsChanged = entity.lines.map(ln => ln.product._id)
+
+    productsChanged.forEach(id =>
+      this.eventEmitter.emit(SHOP_EVENT.PRODUCT_INVENTORY_CHANGED, {id})
+    )
   }
 
   private async fetchOrThrow(id: string): Promise<InventoryInput> {

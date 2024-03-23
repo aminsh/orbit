@@ -1,18 +1,17 @@
 import {Injectable, OnModuleInit} from '@nestjs/common'
 import {ProductRepository} from '../repository/product.repository'
-import {assembleProduct} from '../dto/product.assmbler'
 import {ProductView} from '../dto/product.view'
 import {SearchService} from '../../shared/service/search.service'
 import {PersonView} from '../dto/person.view'
 import {PersonRepository} from '../repository/person.repository'
 import {assemblePerson} from '../dto/person.assembler'
-import {ProductViewAssembler} from '../view-assembler/product-view.assembler'
+import {ProductViewAssemblerService} from '../read/product-view-assembler.service'
 
 @Injectable()
 export class ViewConfigService implements OnModuleInit {
   constructor(
     private productRepository: ProductRepository,
-    private productViewAssembler: ProductViewAssembler,
+    private productViewAssembler: ProductViewAssemblerService,
     private personRepository: PersonRepository,
     private search: SearchService,
   ) {

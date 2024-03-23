@@ -6,7 +6,7 @@ import {userAssembler} from '../../user/dto/user-assembler'
 import {Types} from 'mongoose'
 
 @Injectable()
-export class ProductViewAssembler {
+export class ProductViewAssemblerService {
   constructor(
     private productRepository: ProductRepository,
     private inventoryInputRepository: InventoryInputRepository,
