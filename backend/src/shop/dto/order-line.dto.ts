@@ -1,7 +1,7 @@
-import {Field, Float, Int, ObjectType} from '@nestjs/graphql'
+import {Field, Float, Int, InputType} from '@nestjs/graphql'
 import {IsNumber, IsString} from 'class-validator'
 
-@ObjectType()
+@InputType()
 export class OrderLineDto {
   @Field(() => Int)
   @IsNumber()
