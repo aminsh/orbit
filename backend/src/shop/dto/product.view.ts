@@ -1,6 +1,6 @@
-import {UserView} from '../../user/dto/user.view'
-import {Field, Float, Int, ObjectType} from '@nestjs/graphql'
-import {PageableResponseBase} from '../../shared/type'
+import { UserView } from '../../user/dto/user.view'
+import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { PageableResponseBase } from '../../shared/type'
 
 @ObjectType()
 export class ProductView {

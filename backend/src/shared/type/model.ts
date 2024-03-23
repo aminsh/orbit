@@ -1,5 +1,5 @@
 import { Field, InputType, Int, ObjectType } from '@nestjs/graphql'
-import {IsNumber, IsString} from 'class-validator'
+import { IsNumber } from 'class-validator'
 import { FilterQuery, ProjectionType, QueryOptions } from 'mongoose'
 
 export interface Identity {
