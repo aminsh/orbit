@@ -20,9 +20,13 @@ import {PersonResolver} from './resolver/peson.resolver'
 import {InventoryInputResolver} from './resolver/inventory-input.resolver'
 import {InventoryOutputResolver} from './resolver/inventory-output.resolver'
 import {OrderResolver} from './resolver/order.resolver'
-import {ViewConfigService} from './service/view-config.service'
 import {ProductListenerService} from './service/product-listener.service'
 import {ProductViewAssemblerService} from './read/product-view-assembler.service'
+import {ProductViewInitService} from './read/product-view-init.service'
+import {ProductViewSyncService} from './read/product-view-sync.service'
+import {PersonViewInitService} from './read/person-view-init.service'
+import {PersonViewSyncService} from './read/person-view-sync.service'
+import {PersonViewAssemblerService} from './read/person-view-assembler.service'
 
 @Module({
   imports: [
@@ -38,10 +42,15 @@ import {ProductViewAssemblerService} from './read/product-view-assembler.service
     PersonRepository,
     PersonService,
     PersonResolver,
+    PersonViewInitService,
+    PersonViewSyncService,
+    PersonViewAssemblerService,
     ProductRepository,
     ProductService,
     ProductResolver,
     ProductViewAssemblerService,
+    ProductViewInitService,
+    ProductViewSyncService,
     ProductListenerService,
     InventoryInputRepository,
     InventoryInputService,
@@ -52,7 +61,6 @@ import {ProductViewAssemblerService} from './read/product-view-assembler.service
     OrderRepository,
     OrderService,
     OrderResolver,
-    ViewConfigService,
   ],
 })
 export class ShopModule {
