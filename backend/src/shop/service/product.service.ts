@@ -5,12 +5,15 @@ import {ProductDto} from '../dto/product.dto'
 import {Identity} from '../../shared/type'
 import {Product} from '../schema/product'
 import {User} from '../../user/shema/user'
+import {EventEmitter2} from '@nestjs/event-emitter'
+import {SHOP_EVENT} from '../shop.contants'
 
 @Injectable({scope: Scope.REQUEST})
 export class ProductService {
   constructor(
     private requestContext: RequestContext,
     private productRepository: ProductRepository,
+    private eventEmitter: EventEmitter2,
   ) {
   }
 
@@ -21,9 +24,12 @@ export class ProductService {
     entity.title = dto.title
     entity.description = dto.description
 
-    const result = await this.productRepository.create(entity)
+    const {_id: id} = await this.productRepository.create(entity)
+    const result = {id}
 
-    return {id: result._id}
+    this.eventEmitter.emit(SHOP_EVENT.PRODUCT_CREATED, result)
+
+    return result
   }
 
   async update(id: string, dto: ProductDto): Promise<void> {
@@ -33,11 +39,15 @@ export class ProductService {
     entity.description = dto.description
 
     await this.productRepository.update(entity)
+
+    this.eventEmitter.emit(SHOP_EVENT.PRODUCT_UPDATED, {id})
   }
 
   async remove(id: string): Promise<void> {
     const entity = await this.fetchOrThrow(id)
     await this.productRepository.remove(entity)
+
+    this.eventEmitter.emit(SHOP_EVENT.PRODUCT_REMOVED, {id})
   }
 
   private async fetchOrThrow(id: string): Promise<Product> {

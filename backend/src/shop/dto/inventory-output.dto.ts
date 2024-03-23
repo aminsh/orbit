@@ -1,12 +1,13 @@
-import { Field, ObjectType } from '@nestjs/graphql'
-import { IsDateString, ValidateNested } from 'class-validator'
-import { InventoryLineDto } from './inventory-line.dto'
-import { Type } from 'class-transformer'
+import {Field, InputType} from '@nestjs/graphql'
+import {IsDateString, IsOptional, ValidateNested} from 'class-validator'
+import {InventoryLineDto} from './inventory-line.dto'
+import {Type} from 'class-transformer'
 
-@ObjectType()
+@InputType()
 export class InventoryOutputDto {
-  @Field(() => Date)
+  @Field(() => Date, {nullable: true})
   @IsDateString()
+  @IsOptional()
   date: Date
 
   @Field(() => [InventoryLineDto])

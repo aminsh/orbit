@@ -1,7 +1,7 @@
-import {Field, ObjectType} from '@nestjs/graphql'
-import {IsBoolean, IsOptional} from 'class-validator'
+import {Field, InputType} from '@nestjs/graphql'
+import {IsBoolean, IsOptional, IsString} from 'class-validator'
 
-@ObjectType()
+@InputType()
 export class PersonDto {
   @Field(() => Boolean, {nullable: true})
   @IsBoolean()
@@ -14,6 +14,6 @@ export class PersonDto {
   isSupplier: boolean
 
   @Field(() => String)
-  @IsBoolean()
+  @IsString()
   title: string
 }

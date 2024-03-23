@@ -1,9 +1,9 @@
-import {Field, ObjectType} from '@nestjs/graphql'
+import {Field, InputType} from '@nestjs/graphql'
 import {OrderLineDto} from './order-line.dto'
 import {IsDateString, IsString, ValidateNested} from 'class-validator'
 import {Type} from 'class-transformer'
 
-@ObjectType()
+@InputType()
 export class OrderDto {
   @Field(() => Date)
   @IsDateString()

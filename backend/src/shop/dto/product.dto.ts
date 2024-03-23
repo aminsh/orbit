@@ -1,7 +1,7 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import {Field, InputType, ObjectType} from '@nestjs/graphql'
 import { IsOptional, IsString } from 'class-validator'
 
-@ObjectType()
+@InputType()
 export class ProductDto {
   @Field(() => String)
   @IsString()

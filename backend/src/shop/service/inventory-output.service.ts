@@ -3,12 +3,13 @@ import {Identity} from '../../shared/type'
 import {InventoryInput} from '../schema/inventory-input'
 import {User} from '../../user/shema/user'
 import {BadRequestException, Injectable, NotFoundException, Scope} from '@nestjs/common'
-import {SHOP_MESSAGE} from '../shop.contants'
+import {SHOP_EVENT, SHOP_MESSAGE} from '../shop.contants'
 import {InventoryLineDto} from '../dto/inventory-line.dto'
 import {ProductRepository} from '../repository/product.repository'
 import {InventoryOutputRepository} from '../repository/inventory-output-repository'
 import {InventoryOutputDto} from '../dto/inventory-output.dto'
 import {InventoryOutput} from '../schema/inventory-output'
+import {EventEmitter2} from '@nestjs/event-emitter'
 
 @Injectable({scope: Scope.REQUEST})
 export class InventoryOutputService {
@@ -16,13 +17,14 @@ export class InventoryOutputService {
     private requestContext: RequestContext,
     private inventoryOutputRepository: InventoryOutputRepository,
     private productRepository: ProductRepository,
+    private eventEmitter: EventEmitter2,
   ) {
   }
 
   async create(dto: InventoryOutputDto): Promise<Identity> {
     const entity = new InventoryOutput()
     entity.createdBy = {_id: this.requestContext.authenticatedUser.id} as User
-    entity.date = dto.date
+    entity.date = dto.date ?? new Date()
 
     const last = (await this.inventoryOutputRepository.findOne(
       {},
@@ -30,11 +32,15 @@ export class InventoryOutputService {
       {
         sort: {number: -1}
       }))
-    entity.number = (last.number ?? 1000) + 1
+    entity.number = (last?.number ?? 1000) + 1
 
     await this.resolveLines(entity, dto.lines)
 
     const result = await this.inventoryOutputRepository.create(entity)
+
+    dto.lines.forEach((ln: InventoryLineDto) =>
+      this.eventEmitter.emit(SHOP_EVENT.PRODUCT_INVENTORY_CHANGED, {id: ln.productId})
+    )
 
     return {id: result._id}
   }
@@ -75,7 +81,7 @@ export class InventoryOutputService {
       throw new BadRequestException(SHOP_MESSAGE.PRODUCTS_IS_INVALID)
 
     entity.lines = lines.map(ln => ({
-      product: products.find(p => p._id === ln.productId),
+      product: products.find(p => p._id.toString() === ln.productId),
       quantity: ln.quantity,
     }))
   }

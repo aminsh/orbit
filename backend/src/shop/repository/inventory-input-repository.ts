@@ -7,7 +7,7 @@ import { Injectable } from '@nestjs/common'
 @Injectable()
 export class InventoryInputRepository implements Repository<InventoryInput> {
   constructor(
-    @InjectModel(InventoryInput.name) private model: Model<InventoryInput>,
+    @InjectModel(InventoryInput.name) public model: Model<InventoryInput>,
   ) {
   }
 

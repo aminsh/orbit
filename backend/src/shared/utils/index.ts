@@ -1,3 +1,5 @@
 export * from './mongo.utils'
 export * from './hash.utils'
 export * from './object.utils'
+export * from './string.utils'
+export * from './elastic.utils'

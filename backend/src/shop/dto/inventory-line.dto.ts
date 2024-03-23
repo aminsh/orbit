@@ -1,7 +1,7 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql'
+import {Field, Float, InputType} from '@nestjs/graphql'
 import { IsNumber, IsString } from 'class-validator'
 
-@ObjectType()
+@InputType()
 export class InventoryLineDto {
   @Field(() => String)
   @IsString()

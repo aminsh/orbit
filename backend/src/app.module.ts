@@ -1,24 +1,30 @@
-import { join } from 'path'
-import { redisStore } from 'cache-manager-redis-store'
-import { CacheModule, CacheModuleAsyncOptions, Module } from '@nestjs/common'
-import { MongooseModule } from '@nestjs/mongoose'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { UserModule } from './user/user.module'
-import { GraphQLModule } from '@nestjs/graphql'
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
-import { GraphQLJSON, VoidResolver } from 'graphql-scalars'
-import { SharedModule } from './shared/shared.module'
-import { DataModule } from './data/data.module'
-import { EventEmitterModule } from '@nestjs/event-emitter'
-import { ApiModule } from './api/api.module'
+import {join} from 'path'
+import {redisStore} from 'cache-manager-redis-store'
+import {CacheModule, CacheModuleAsyncOptions, Module} from '@nestjs/common'
+import {MongooseModule} from '@nestjs/mongoose'
+import {ConfigModule, ConfigService} from '@nestjs/config'
+import {UserModule} from './user/user.module'
+import {GraphQLModule} from '@nestjs/graphql'
+import {ApolloDriver, ApolloDriverConfig} from '@nestjs/apollo'
+import {GraphQLJSON, VoidResolver} from 'graphql-scalars'
+import {SharedModule} from './shared/shared.module'
+import {DataModule} from './data/data.module'
+import {EventEmitterModule} from '@nestjs/event-emitter'
+import {ApiModule} from './api/api.module'
+import {ShopModule} from './shop/shop.module'
+import * as mongoose from 'mongoose'
+
+mongoose.set('debug', true)
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({isGlobal: true}),
     MongooseModule.forRootAsync({
-      imports: [ ConfigModule ],
-      inject: [ ConfigService ],
-      useFactory: (configService: ConfigService) => ({ uri: configService.get('MONGO_URI') })
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.get('MONGO_URI'),
+      })
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -48,6 +54,7 @@ import { ApiModule } from './api/api.module'
     UserModule,
     DataModule,
     ApiModule,
+    ShopModule,
   ],
   controllers: [],
   providers: [],

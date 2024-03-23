@@ -8,6 +8,9 @@ import { FileRepository } from './repository/file.repository'
 import { FileController } from './controller/file.controller'
 import { MongooseModule } from '@nestjs/mongoose'
 import { File, FileSchema } from './schema/file'
+import {SearchService} from './service/search.service'
+import {ElasticsearchModule} from '@nestjs/elasticsearch'
+import {ConfigService} from '@nestjs/config'
 
 @Global()
 @Module({
@@ -17,19 +20,27 @@ import { File, FileSchema } from './schema/file'
     }),
     MongooseModule.forFeature([
       { name: File.name, schema: FileSchema }
-    ])
+    ]),
+    ElasticsearchModule.registerAsync({
+      useFactory: (configService: ConfigService) => ({
+        node: configService.get('ELASTIC_URL'),
+      }),
+      inject: [ConfigService],
+    }),
   ],
   providers: [
     RequestContext,
     FileService,
-    FileRepository
+    FileRepository,
+    SearchService,
   ],
   controllers: [
     FileController
   ],
   exports: [
     RequestContext,
-    FileRepository
+    FileRepository,
+    SearchService,
   ]
 })
 export class SharedModule {
