@@ -1,6 +1,6 @@
 const knex = require('knex')({
     client: 'pg',
-    connection: 'postgresql://postgres:P@ssw0rd@localhost:1000/gop-db-20240225-2?schema=public',
+    connection: 'postgresql://postgres:P@ssw0rd@localhost:8004/gop_db_20270227?schema=public',
     debug: false,
 })
 
@@ -15,7 +15,7 @@ module.exports = {
 
         await db.collection('products').insertMany(
             products.map(p => ({
-                createdBy: new ObjectId('65ce806cae1252302f277548'),
+                createdBy: new ObjectId('65c3acd9bd70ac73e64ead07'),
                 sku: p.sku,
                 title: p.description,
                 createdAt: new Date(),
@@ -29,7 +29,7 @@ module.exports = {
 
         await db.collection('people').insertMany(
             people.map(p => ({
-                createdBy: new ObjectId('65ce806cae1252302f277548'),
+                createdBy: new ObjectId('65c3acd9bd70ac73e64ead07'),
                 title: `${p.first_name} ${p.last_name}`,
                 isCustomer: true,
                 createdAt: new Date(),

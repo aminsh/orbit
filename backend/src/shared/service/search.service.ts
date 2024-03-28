@@ -1,7 +1,7 @@
-import {Injectable, Type} from '@nestjs/common'
-import {ElasticsearchService} from '@nestjs/elasticsearch'
-import {Identity, PageableRequest, PageableResponseBase} from '../type'
-import {camelToSnakeCase, getMapping} from '../utils'
+import { Injectable, Type } from '@nestjs/common'
+import { ElasticsearchService } from '@nestjs/elasticsearch'
+import { Identity, PageableRequest, PageableResponseBase } from '../type'
+import { camelToSnakeCase, getMapping } from '../utils'
 
 type IndexName<TView = any> = string | Type<TView>
 
@@ -19,10 +19,10 @@ export class SearchService {
       await this.elasticSearchService.indices.create({index})
   }
 
-  async putMapping(view: Type) {
+  async putMapping(view: Type, body?: any) {
     await this.elasticSearchService.indices.put_mapping({
       index: this.resolveIndexName(view),
-      body: getMapping(view),
+      body: body ?? getMapping(view),
     })
   }
 
